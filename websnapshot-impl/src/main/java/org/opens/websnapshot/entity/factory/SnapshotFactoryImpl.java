@@ -38,7 +38,7 @@ public class SnapshotFactoryImpl implements SnapshotFactory {
     public Snapshot create(String url) {
         Snapshot snapshot = create();
         snapshot.setUrl(url);
-        snapshot.setDate(Calendar.getInstance().getTime());
+        snapshot.setDateOfCreation(Calendar.getInstance().getTime());
         return snapshot;
     }
 }

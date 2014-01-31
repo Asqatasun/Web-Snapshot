@@ -32,20 +32,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ThumbnailImpl implements Thumbnail, Serializable {
 
+    private static final int HASH_NUMBER = 7;
+    private static final int HASH_COEFFICIENT = 61;
     @Id
     @GeneratedValue
     @Column(name = "id")
-    protected Long id;
+    private Long id;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_image")
-    protected ImageImpl image;
+    private ImageImpl image;
     @OneToOne
     @JoinColumn(name = "id_snapshot")
-    protected SnapshotImpl snapshot;
+    private SnapshotImpl snapshot;
     @Column(name = "width")
-    protected int width;
+    private int width;
     @Column(name = "height")
-    protected int height;
+    private int height;
 
     @Override
     public int getWidth() {
@@ -84,7 +86,7 @@ public class ThumbnailImpl implements Thumbnail, Serializable {
 
     @Override
     public void setImage(Image image) {
-        this.image = (ImageImpl)image;
+        this.image = (ImageImpl) image;
     }
 
     @Override
@@ -94,7 +96,7 @@ public class ThumbnailImpl implements Thumbnail, Serializable {
 
     @Override
     public void setSnapshot(Snapshot snapshot) {
-        this.snapshot = (SnapshotImpl)snapshot;
+        this.snapshot = (SnapshotImpl) snapshot;
     }
 
     @Override
@@ -114,8 +116,8 @@ public class ThumbnailImpl implements Thumbnail, Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + (this.id != null ? this.id.hashCode() : 0);
+        int hash = HASH_NUMBER;
+        hash = HASH_COEFFICIENT * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 }

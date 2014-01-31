@@ -35,7 +35,6 @@ public class ThumbnailFactoryImpl implements ThumbnailFactory {
 
     @Override
     public Thumbnail create(String url) {
-        Thumbnail thumbnail = create();
-        return thumbnail;
+        return create();
     }
 }

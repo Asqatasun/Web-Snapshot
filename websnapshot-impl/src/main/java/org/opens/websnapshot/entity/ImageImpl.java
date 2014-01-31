@@ -38,13 +38,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ImageImpl implements Image, Serializable {
 
+    private static final int HASH_NUMBER = 3;
+    private static final int HASH_COEFFICIENT = 89;
+    
     @Id
     @GeneratedValue
     @Column(name = "id")
-    protected Long id;
+    private Long id;
     @Lob
     @Column(name = "raw_data")
-    protected byte[] image;
+    private byte[] image;
 
     @Override
     public Long getId() {
@@ -58,12 +61,12 @@ public class ImageImpl implements Image, Serializable {
 
     @Override
     public byte[] getData() {
-        return image;
+        return (byte[])image.clone();
     }
 
     @Override
     public void setData(byte[] image) {
-        this.image = image;
+        this.image = (byte[])image.clone();
     }
 
     @Override
@@ -86,9 +89,9 @@ public class ImageImpl implements Image, Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 89 * hash + Arrays.hashCode(this.image);
+        int hash = HASH_NUMBER;
+        hash = HASH_COEFFICIENT * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = HASH_COEFFICIENT * hash + Arrays.hashCode(this.image);
         return hash;
     }
 }

@@ -27,7 +27,6 @@ import org.opens.websnapshot.entity.Snapshot;
 import org.opens.websnapshot.entity.dao.SnapshotDAO;
 import org.opens.websnapshot.service.SnapshotCreator;
 
-
 public class SnapshotDataServiceImpl extends AbstractGenericDataService<Snapshot, Long>
         implements SnapshotDataService {
 
@@ -57,12 +56,10 @@ public class SnapshotDataServiceImpl extends AbstractGenericDataService<Snapshot
     }
 
     @Override
-    public Snapshot getSnapshotFromUrl(String url, boolean forceRecreate) {
+    public Snapshot getSnapshotFromUrl(String url) {
         Snapshot snapshot = ((SnapshotDAO) entityDao).findSnapshotByUrl(url);
-        if (snapshot != null && snapshot.getImage() != null && forceRecreate == false) {
+        if (snapshot != null && snapshot.getImage() != null) {
             return snapshot;
-        } else if (snapshot != null && snapshot.getImage() != null && forceRecreate == true) {
-            return createNewSnapshot(url);
         }
         return createNewSnapshot(url);
     }
@@ -99,7 +96,7 @@ public class SnapshotDataServiceImpl extends AbstractGenericDataService<Snapshot
         image = imageDataService.saveOrUpdate(image);
 
         snapshot.setImage(image);
-        snapshot.setDate(Calendar.getInstance().getTime());
+        snapshot.setDateOfCreation(Calendar.getInstance().getTime());
         snapshot.setWidth(SNAPSHOT_WIDTH);
         snapshot.setHeight(SNAPSHOT_HEIGHT);
         snapshot.setUrl(url);

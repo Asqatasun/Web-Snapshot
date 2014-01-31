@@ -100,10 +100,8 @@ public class IndexController {
         if (!UrlUtils.checkIfURLExists(url)) {
             return "malformed url";
         }
-        if (date != null) {
-            if (!isLong(date) && convertStringDateToDate(date) == null) {
-                return "invalid data format";
-            }
+        if (date != null && !isLong(date) && convertStringDateToDate(date) == null) {
+            return "invalid data format";
         }
         return UrlUtils.checkURLAvailable(url);
     }

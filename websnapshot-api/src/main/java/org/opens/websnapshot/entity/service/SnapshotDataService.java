@@ -34,7 +34,7 @@ public interface SnapshotDataService extends GenericDataService<Snapshot, Long> 
      * @param url
      * @return
      */
-    Snapshot getSnapshotFromUrl(String url, boolean forceRecreate);
+    Snapshot getSnapshotFromUrl(String url);
 
     /**
      *

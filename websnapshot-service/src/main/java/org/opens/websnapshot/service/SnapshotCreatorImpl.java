@@ -28,7 +28,6 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -39,16 +38,15 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class SnapshotCreatorImpl implements SnapshotCreator {
 
-    private static final Logger LOGGER = Logger.getLogger(SnapshotCreatorImpl.class);
-    public static final int DEFAULT_WINDOW_WIDTH = 1024;
-    public static final int DEFAULT_WINDOW_HEIGHT = 768;
-    public static final String FIREFOX_BROWSER_NAME = "firefox";
-    public static final String PHANTOMJS_BROWSER_NAME = "phantomJs";
+    private static final int DEFAULT_WINDOW_WIDTH = 1024;
+    private static final int DEFAULT_WINDOW_HEIGHT = 768;
+    private static final String FIREFOX_BROWSER_NAME = "firefox";
+    private static final String PHANTOMJS_BROWSER_NAME = "phantomJs";
     private String phantomJsBinaryPath = "/opt/phantomjs/bin/phantomjs";
     private String firefoxBinaryPath = "/opt/firefox/firefox";
-    public int windowWidth = DEFAULT_WINDOW_WIDTH;
-    public int windowHeight = DEFAULT_WINDOW_HEIGHT;
-    public String webDriver = PHANTOMJS_BROWSER_NAME;
+    private int windowWidth = DEFAULT_WINDOW_WIDTH;
+    private int windowHeight = DEFAULT_WINDOW_HEIGHT;
+    private String webDriver = PHANTOMJS_BROWSER_NAME;
 
     public int getWindowWidth() {
         return windowWidth;

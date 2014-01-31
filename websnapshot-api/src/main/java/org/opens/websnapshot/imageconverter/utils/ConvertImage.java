@@ -31,23 +31,28 @@ import javax.imageio.ImageIO;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 
-public class ConvertImage {
+public final class ConvertImage {
 
+    private static final int TEXT_SIZE = 14;
+    private static final int IMAGE_WIDTH = 300;
+    private static final int IMAGE_HEIGHT = 200;
+    private static final int IMAGE_TEXT_POSITION = 20;
+    
     /**
      *
      * @param httpResponse
      * @return
      */
     public static byte[] createThumbnailFromErrorMessage(String httpResponse) throws IOException {
-        Font f = new Font(Font.MONOSPACED, Font.PLAIN, 14);
+        Font f = new Font(Font.MONOSPACED, Font.PLAIN, TEXT_SIZE);
 
-        BufferedImage img = new BufferedImage(300, 200, BufferedImage.TYPE_4BYTE_ABGR);
+        BufferedImage img = new BufferedImage(IMAGE_WIDTH, IMAGE_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g = img.createGraphics();
         g.setPaint(new Color(0, 0, 0));
         g.fillRect(0, 0, img.getWidth(), img.getHeight());
         g.setColor(Color.WHITE);
         g.setFont(f);
-        g.drawString(httpResponse.toString(), 20, 20);
+        g.drawString(httpResponse, IMAGE_TEXT_POSITION, IMAGE_TEXT_POSITION);
         g.dispose();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -70,20 +75,20 @@ public class ConvertImage {
             Float proportionalHeight = img.getHeight() * ratio;
 
             //the new image is smaller than the original
-            img = Thumbnails.of(img)
+            BufferedImage image = Thumbnails.of(img)
                     .size(width, proportionalHeight.intValue())
                     .asBufferedImage();
 
             // this is the final image, the thumbnail, with a crop for better visualisation
-            if (height > img.getHeight()) {
-                bufferedImageToByteArrayImage(img);
+            if (height > image.getHeight()) {
+                bufferedImageToByteArrayImage(image);
             }
 
-            img = Thumbnails.of(img).size(img.getWidth(), height)
+            image = Thumbnails.of(image).size(image.getWidth(), height)
                     .crop(Positions.TOP_LEFT)
                     .asBufferedImage();
 
-            return bufferedImageToByteArrayImage(img);
+            return bufferedImageToByteArrayImage(image);
         } catch (IOException ex) {
             return null;
         }

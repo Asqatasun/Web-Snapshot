@@ -37,9 +37,15 @@ import org.opens.websnapshot.imageconverter.utils.ConvertImage;
 public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbnail, Long>
         implements ThumbnailDataService {
 
+    private static final long DEFAULT_LIFETIME = 300000;
+    private static final long SNAPSHOT_WIDTH = 1024L;
+    private static final long SNAPSHOT_HEIGHT = 768L;
     private ImageDataService imageDataService;
     private SnapshotDataService snapshotDataService;
     private SnapshotCreator snapshotCreator;
+    private long lifetime = DEFAULT_LIFETIME;
+    private String notExpirableUrlRegexp = "test";
+    private Pattern notExpirableUrlPattern;
 
     public SnapshotCreator getSnapshotCreator() {
         return snapshotCreator;
@@ -65,10 +71,6 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
         this.snapshotDataService = snapshotDataService;
     }
 
-    private long lifetime = 300000;
-    private String notExpirableUrlRegexp = "test";
-    private Pattern notExpirableUrlPattern;
-    
     public ThumbnailDataServiceImpl() {
         super();
         notExpirableUrlPattern = Pattern.compile(notExpirableUrlRegexp);
@@ -77,7 +79,7 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
     @Override
     public Thumbnail getThumbnailFromUrlAndWidthAndHeight(String url, int width, int height) {
         Thumbnail thumbnail = ((ThumbnailDAO) entityDao).findThumbnailFromUrlAndWidthAndHeight(url, width, height);
-        
+
         if (thumbnail != null) {
             if (isExpirated(url, thumbnail)) {
                 // if the thumbnail exists and is expired, we recreate it
@@ -86,8 +88,8 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
             // if the thumbnail exists and is not expired, we return it
             return thumbnail;
         }
-        
-        Snapshot snapshot = snapshotDataService.getSnapshotFromUrl(url, false);
+
+        Snapshot snapshot = snapshotDataService.getSnapshotFromUrl(url);
         if (snapshot != null) {
             return createThumbnail(snapshot.getImage(), snapshot, width, height);
         }
@@ -95,7 +97,7 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
     }
 
     /**
-     * 
+     *
      * @param url
      * @param width
      * @param height
@@ -105,12 +107,12 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
         Snapshot snapshot = createNewSnapshot(url);
         return createThumbnail(snapshot.getImage(), snapshot, width, height);
     }
-    
+
     /**
-     * 
+     *
      * @param url
      * @param thumbnail
-     * @return 
+     * @return
      */
     private boolean isExpirated(String url, Thumbnail thumbnail) {
         // if the requested url matches the pattern, that means that it never
@@ -120,9 +122,9 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
         }
         // if the date of the last found snapshot is anterior than the current 
         // date minus the lifetime, we consider it as expired
-        return Calendar.getInstance().getTimeInMillis() - thumbnail.getSnapshot().getDate().getTime() > lifetime;
+        return Calendar.getInstance().getTimeInMillis() - thumbnail.getSnapshot().getDateOfCreation().getTime() > lifetime;
     }
-    
+
     @Override
     public Thumbnail getThumbnailFromDateAndUrlAndWidthAndHeight(String url, Date date, int width, int height) {
         Thumbnail thumbnail = ((ThumbnailDAO) entityDao).findThumbnailFromDateAndUrlAndWidthAndHeight(url, date, width, height);
@@ -131,7 +133,7 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
             return thumbnail;
         }
 
-        Snapshot snapshot = snapshotDataService.getSnapshotFromUrl(url, false);
+        Snapshot snapshot = snapshotDataService.getSnapshotFromUrl(url);
         if (snapshot != null) {
             return createThumbnail(snapshot.getImage(), snapshot, width, height);
         }
@@ -139,16 +141,16 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
     }
 
     /**
-     * 
+     *
      * @param url
      * @return the new snapshot object from a url
      */
     private Snapshot createNewSnapshot(String url) {
         Snapshot snapshot = snapshotDataService.create();
         snapshot.setUrl(url);
-        snapshot.setDate(Calendar.getInstance().getTime());
-        snapshot.setWidth(1024L);
-        snapshot.setHeight(768L);
+        snapshot.setDateOfCreation(Calendar.getInstance().getTime());
+        snapshot.setWidth(SNAPSHOT_WIDTH);
+        snapshot.setHeight(SNAPSHOT_HEIGHT);
 
         byte[] rawImage = snapshotCreator.getScreenshot(url);
         Image image = imageDataService.create();
@@ -204,7 +206,4 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
     public Long getCount() {
         return ((ThumbnailDAO) entityDao).count();
     }
-
-
-
 }

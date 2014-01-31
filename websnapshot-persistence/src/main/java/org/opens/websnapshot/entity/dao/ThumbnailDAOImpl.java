@@ -26,7 +26,6 @@ import org.opens.tanaguru.sdk.entity.dao.jpa.AbstractJPADAO;
 import org.opens.websnapshot.entity.Thumbnail;
 import org.opens.websnapshot.entity.ThumbnailImpl;
 
-
 public class ThumbnailDAOImpl extends AbstractJPADAO<Thumbnail, Long>
         implements ThumbnailDAO {
 
@@ -113,24 +112,6 @@ public class ThumbnailDAOImpl extends AbstractJPADAO<Thumbnail, Long>
      */
     private Thumbnail findBeforeThumbnailFromDate(String url, Date date, int width, int height) {
         return findThumbnailFromDate(url, date, width, height, true);
-//        Query query = entityManager.createQuery(
-//                "SELECT t FROM " + getEntityClass().getName() + " as t "
-//                + "LEFT JOIN t.snapshot as s "
-//                + "WHERE s.url like :url "
-//                + "AND t.width = :width "
-//                + "AND t.height = :height "
-//                + "AND s.dateOfCreation < :date "
-//                + "ORDER BY s.dateOfCreation DESC");
-//        query.setParameter("width", width);
-//        query.setParameter("height", height);
-//        query.setParameter("url", url);
-//        query.setParameter("date", date);
-//        query.setMaxResults(1);
-//        try {
-//            return (Thumbnail) query.getSingleResult();
-//        } catch (NoResultException nre) {
-//            return null;
-//        }
     }
 
     /**
@@ -143,24 +124,6 @@ public class ThumbnailDAOImpl extends AbstractJPADAO<Thumbnail, Long>
      */
     private Thumbnail findNextThumbnailFromDate(String url, Date date, int width, int height) {
         return findThumbnailFromDate(url, date, width, height, false);
-//        Query query = entityManager.createQuery(
-//                "SELECT t FROM " + getEntityClass().getName() + " as t "
-//                + "LEFT JOIN t.snapshot as s "
-//                + "WHERE s.url like :url "
-//                + "AND t.width = :width "
-//                + "AND t.height = :height "
-//                + "AND s.dateOfCreation > :date "
-//                + "ORDER BY s.dateOfCreation ASC");
-//        query.setParameter("width", width);
-//        query.setParameter("height", height);
-//        query.setParameter("url", url);
-//        query.setParameter("date", date);
-//        query.setMaxResults(1);
-//        try {
-//            return (Thumbnail) query.getSingleResult();
-//        } catch (NoResultException nre) {
-//            return findThumbnailFromDate(url, date, width, height, false);
-//        }
     }
 
     private Thumbnail findThumbnailFromDate(String url, Date date, int width, int height, boolean previous) {
@@ -208,8 +171,8 @@ public class ThumbnailDAOImpl extends AbstractJPADAO<Thumbnail, Long>
      * @return the closest Thumbnail from the targetDate
      */
     private Thumbnail closestThumbnailFromDate(Thumbnail beforeThumbnail, Thumbnail nextThumbnail, Date targetDate) {
-        Long beforeDate = beforeThumbnail.getSnapshot().getDate().getTime();
-        Long nextDate = nextThumbnail.getSnapshot().getDate().getTime();
+        Long beforeDate = beforeThumbnail.getSnapshot().getDateOfCreation().getTime();
+        Long nextDate = nextThumbnail.getSnapshot().getDateOfCreation().getTime();
         Long diffBeforeDateAndTargetDate = targetDate.getTime() - beforeDate;
         Long diffNextDateAndTargetDate = nextDate - targetDate.getTime();
 

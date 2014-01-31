@@ -132,28 +132,28 @@ public class ThumbnailDAOImplTest extends AbstractDaoTestCase {
         Thumbnail returnedThumbnail1 = instance.findThumbnailFromDateAndUrlAndWidthAndHeight("http://www.epitech.eu/", date, 1024, 768);
         assertEquals(Long.valueOf(4), returnedThumbnail1.getSnapshot().getId());
         Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getId());
-        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getDate());
+        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getDateOfCreation());
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 16, 00, 01, 0);
         date = cl.getTime();
         returnedThumbnail1 = instance.findThumbnailFromDateAndUrlAndWidthAndHeight("http://www.epitech.eu/", date, 1024, 768);
         assertEquals(Long.valueOf(3), returnedThumbnail1.getSnapshot().getId());
         Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getId());
-        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getDate());
+        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getDateOfCreation());
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 16, 00, 00, 0);
         date = cl.getTime();
         returnedThumbnail1 = instance.findThumbnailFromDateAndUrlAndWidthAndHeight("http://www.epitech.eu/", date, 1024, 768);
         assertEquals(Long.valueOf(3), returnedThumbnail1.getSnapshot().getId());
         Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getId());
-        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getDate());
+        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getDateOfCreation());
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 15, 23, 59, 59);
         date = cl.getTime();
         returnedThumbnail1 = instance.findThumbnailFromDateAndUrlAndWidthAndHeight("http://www.epitech.eu/", date, 1024, 768);
         assertEquals(Long.valueOf(4), returnedThumbnail1.getSnapshot().getId());
         Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getId());
-        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getDate());
+        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getSnapshot().getDateOfCreation());
     }
 
     /**

@@ -52,13 +52,13 @@ public interface Snapshot extends Entity {
      *
      * @return the date of creating snapshot
      */
-    Date getDate();
+    Date getDateOfCreation();
 
     /**
      *
      * @param date
      */
-    void setDate(Date date);
+    void setDateOfCreation(Date date);
 
     /**
      *

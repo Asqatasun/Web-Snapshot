@@ -24,28 +24,31 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class UrlUtils {
+public final class UrlUtils {
 
+    private static final int MIN_HTTP_VALID_CODE = 200;
+    private static final int MAX_HTTP_VALID_CODE = 400;
+    
     public static boolean checkIfURLExists(String targetUrl) {
         try {
             URL url = new URL(targetUrl);
+            return true;
         } catch (MalformedURLException ex) {
             return false;
         }
-        return true;
     }
 
-    public static String checkURLAvailable(String URLName) {
+    public static String checkURLAvailable(String targetUrl) {
         try {
-            URL url = new URL(URLName);
+            URL url = new URL(targetUrl);
             URLConnection urlConnection = url.openConnection();
 
             HttpURLConnection.setFollowRedirects(true);
             HttpURLConnection httpURLConnection = (HttpURLConnection) urlConnection;
             httpURLConnection.setRequestMethod("HEAD");
 
-            if (httpURLConnection.getResponseCode() >= 200
-                    && httpURLConnection.getResponseCode() < 400) {
+            if (httpURLConnection.getResponseCode() >= MIN_HTTP_VALID_CODE
+                    && httpURLConnection.getResponseCode() < MAX_HTTP_VALID_CODE) {
                 return "OK";
             } else {
                 return Integer.toString(httpURLConnection.getResponseCode()) + " " + httpURLConnection.getResponseMessage();

@@ -40,22 +40,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class SnapshotImpl implements Snapshot, Serializable {
 
+    private static final int HASH_NUMBER = 5;
+    private static final int HASH_COEFFICIENT = 67;
+    
     @Id
     @GeneratedValue
     @Column(name = "id")
-    protected Long id;
+    private Long id;
     @OneToOne
     @JoinColumn(name = "id_image")
-    protected ImageImpl image;
+    private ImageImpl image;
     @Column(name = "url")
-    protected String url;
+    private String url;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(name = "date_of_creation")
-    protected Date dateOfCreation;
+    private Date dateOfCreation;
     @Column(name = "width")
-    protected Long width;
+    private Long width;
     @Column(name = "height")
-    protected Long height;
+    private Long height;
 
     @Override
     public Long getId() {
@@ -88,13 +91,13 @@ public class SnapshotImpl implements Snapshot, Serializable {
     }
 
     @Override
-    public Date getDate() {
-        return dateOfCreation;
+    public Date getDateOfCreation() {
+        return (Date) dateOfCreation.clone();
     }
 
     @Override
-    public void setDate(Date dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = (Date) dateOfCreation.clone();
     }
 
     @Override
@@ -134,8 +137,8 @@ public class SnapshotImpl implements Snapshot, Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + (this.id != null ? this.id.hashCode() : 0);
+        int hash = HASH_NUMBER;
+        hash = HASH_COEFFICIENT * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 }

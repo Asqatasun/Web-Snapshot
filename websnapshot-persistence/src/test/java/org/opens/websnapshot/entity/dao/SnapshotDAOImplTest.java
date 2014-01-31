@@ -109,27 +109,27 @@ public class SnapshotDAOImplTest extends AbstractDaoTestCase {
         Snapshot returnedThumbnail1 = instance.findSnapshotByUrlAndDate("http://www.epitech.eu/", date);
         assertEquals(Long.valueOf(4), returnedThumbnail1.getId());
         Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getId());
-        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getDate());
+        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getDateOfCreation());
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 16, 00, 01, 0);
         date = cl.getTime();
         returnedThumbnail1 = instance.findSnapshotByUrlAndDate("http://www.epitech.eu/", date);
         assertEquals(Long.valueOf(3), returnedThumbnail1.getId());
         Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getId());
-        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getDate());
+        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getDateOfCreation());
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 16, 00, 00, 0);
         date = cl.getTime();
         returnedThumbnail1 = instance.findSnapshotByUrlAndDate("http://www.epitech.eu/", date);
         assertEquals(Long.valueOf(3), returnedThumbnail1.getId());
         Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getId());
-        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getDate());
+        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getDateOfCreation());
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 15, 23, 59, 59);
         date = cl.getTime();
         returnedThumbnail1 = instance.findSnapshotByUrlAndDate("http://www.epitech.eu/", date);
         assertEquals(Long.valueOf(4), returnedThumbnail1.getId());
         Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getId());
-        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getDate());
+        Logger.getLogger(this.getClass()).debug(returnedThumbnail1.getDateOfCreation());
     }
 }
