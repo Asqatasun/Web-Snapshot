@@ -40,14 +40,13 @@ public class ImageImpl implements Image, Serializable {
 
     private static final int HASH_NUMBER = 3;
     private static final int HASH_COEFFICIENT = 89;
-    
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Long id;
     @Lob
     @Column(name = "raw_data")
-    private byte[] image;
+    private byte[] rawData;
 
     @Override
     public Long getId() {
@@ -60,13 +59,13 @@ public class ImageImpl implements Image, Serializable {
     }
 
     @Override
-    public byte[] getData() {
-        return (byte[])image.clone();
+    public byte[] getRawData() {
+        return rawData.clone();
     }
 
     @Override
-    public void setData(byte[] image) {
-        this.image = (byte[])image.clone();
+    public void setRawData(byte[] rawData) {
+        this.rawData = rawData.clone();
     }
 
     @Override
@@ -81,7 +80,7 @@ public class ImageImpl implements Image, Serializable {
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
-        if (!Arrays.equals(this.image, other.image)) {
+        if (!Arrays.equals(this.rawData, other.rawData)) {
             return false;
         }
         return true;
@@ -91,7 +90,7 @@ public class ImageImpl implements Image, Serializable {
     public int hashCode() {
         int hash = HASH_NUMBER;
         hash = HASH_COEFFICIENT * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = HASH_COEFFICIENT * hash + Arrays.hashCode(this.image);
+        hash = HASH_COEFFICIENT * hash + Arrays.hashCode(this.rawData);
         return hash;
     }
 }

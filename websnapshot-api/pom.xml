@@ -29,9 +29,12 @@
             <artifactId>commons-entity</artifactId>
         </dependency>
         <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+        </dependency>
+        <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
-            <type>jar</type>
         </dependency>
     </dependencies>
 </project>

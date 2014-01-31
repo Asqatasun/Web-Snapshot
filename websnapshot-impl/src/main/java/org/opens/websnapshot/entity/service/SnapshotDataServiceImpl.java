@@ -92,7 +92,7 @@ public class SnapshotDataServiceImpl extends AbstractGenericDataService<Snapshot
         byte[] rawImage = snapshotCreator.getScreenshot(url);
         Image image = imageDataService.create();
 
-        image.setData(rawImage);
+        image.setRawData(rawImage);
         image = imageDataService.saveOrUpdate(image);
 
         snapshot.setImage(image);

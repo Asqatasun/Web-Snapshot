@@ -155,7 +155,7 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
         byte[] rawImage = snapshotCreator.getScreenshot(url);
         Image image = imageDataService.create();
 
-        image.setData(rawImage);
+        image.setRawData(rawImage);
         image = imageDataService.saveOrUpdate(image);
 
         snapshot.setImage(image);
@@ -182,8 +182,8 @@ public class ThumbnailDataServiceImpl extends AbstractGenericDataService<Thumbna
         // instanciating a new image and setting the data and saving it in db.
         Image thumbnailData = imageDataService.create();
         try {
-            thumbnailData.setData(ConvertImage.createThumbnailFromScreenshot(
-                    ConvertImage.byteArrayImageToBufferedImage(image.getData()),
+            thumbnailData.setRawData(ConvertImage.createThumbnailFromScreenshot(
+                    ConvertImage.byteArrayImageToBufferedImage(image.getRawData()),
                     width,
                     height));
         } catch (IOException ex) {

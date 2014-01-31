@@ -34,7 +34,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
     public Image getImageFromId(int id) {
         Image image = ((ImageDAO) entityDao).findImageById(id);
 
-        if (image.getData() != null) {
+        if (image.getRawData() != null) {
             return image;
         }
         return null;

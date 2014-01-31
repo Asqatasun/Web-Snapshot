@@ -6,12 +6,6 @@
     <class>org.opens.websnapshot.entity.SnapshotImpl</class>
     <class>org.opens.websnapshot.entity.ThumbnailImpl</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
-<!--    <properties>
-      <property name="hibernate.connection.username" value=""/>
-      <property name="hibernate.connection.driver_class" value=""/>
-      <property name="hibernate.connection.password" value=""/>
-      <property name="hibernate.connection.url" value=""/>
-    </properties>-->
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
     </properties>

@@ -27,12 +27,12 @@ public interface Image extends Entity {
      * 
      * @return 
      */
-    byte[] getData();
+    byte[] getRawData();
 
     /**
      * 
      * @param thumbnail 
      */
-    void setData(byte[] thumbnail);
+    void setRawData(byte[] thumbnail);
 
 }

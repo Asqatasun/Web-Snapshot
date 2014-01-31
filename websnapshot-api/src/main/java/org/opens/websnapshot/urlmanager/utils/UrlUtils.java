@@ -20,9 +20,9 @@
 package org.opens.websnapshot.urlmanager.utils;
 
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import org.apache.commons.validator.routines.UrlValidator;
 
 public final class UrlUtils {
 
@@ -37,16 +37,13 @@ public final class UrlUtils {
 
     /**
      * 
-     * @param targetUrl
+     * @param url
      * @return 
      */
-    public static boolean checkIfURLExists(String targetUrl) {
-        try {
-            URL url = new URL(targetUrl);
-            return true;
-        } catch (MalformedURLException ex) {
-            return false;
-        }
+    public static boolean checkIfURLIsValid(String url) {
+        String[] schemes = {"http","https"};
+        UrlValidator urlValidator = new UrlValidator (schemes, UrlValidator.ALLOW_2_SLASHES);
+        return urlValidator.isValid(url);
     }
 
     /**

@@ -82,13 +82,13 @@ public class IndexController {
                     convertDate,
                     Integer.valueOf(width),
                     Integer.valueOf(height));
-            return new HttpEntity<byte[]>(thumbnail.getSnapshot().getImage().getData(), headers);
+            return new HttpEntity<byte[]>(thumbnail.getSnapshot().getImage().getRawData(), headers);
         } else {
             Thumbnail thumbnail = thumbnailDataService.getThumbnailFromUrlAndWidthAndHeight(
                     url,
                     Integer.valueOf(width),
                     Integer.valueOf(height));
-            return new HttpEntity<byte[]>(thumbnail.getImage().getData(), headers);
+            return new HttpEntity<byte[]>(thumbnail.getImage().getRawData(), headers);
         }
 
     }
@@ -97,7 +97,7 @@ public class IndexController {
         if (!isInteger(width) || !isInteger(height)) {
             return "invalid parameters format";
         }
-        if (!UrlUtils.checkIfURLExists(url)) {
+        if (!UrlUtils.checkIfURLIsValid(url)) {
             return "malformed url";
         }
         if (date != null && !isLong(date) && convertStringDateToDate(date) == null) {
