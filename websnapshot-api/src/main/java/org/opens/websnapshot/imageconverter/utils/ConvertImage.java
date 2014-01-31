@@ -37,7 +37,13 @@ public final class ConvertImage {
     private static final int IMAGE_WIDTH = 300;
     private static final int IMAGE_HEIGHT = 200;
     private static final int IMAGE_TEXT_POSITION = 20;
-    
+
+    /**
+     * private constructor
+     */
+    private ConvertImage() {
+    }
+
     /**
      *
      * @param httpResponse

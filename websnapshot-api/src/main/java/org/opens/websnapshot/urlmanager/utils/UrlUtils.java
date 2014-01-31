@@ -28,7 +28,18 @@ public final class UrlUtils {
 
     private static final int MIN_HTTP_VALID_CODE = 200;
     private static final int MAX_HTTP_VALID_CODE = 400;
-    
+
+    /**
+     * private constructor
+     */
+    private UrlUtils() {
+    }
+
+    /**
+     * 
+     * @param targetUrl
+     * @return 
+     */
     public static boolean checkIfURLExists(String targetUrl) {
         try {
             URL url = new URL(targetUrl);
@@ -38,6 +49,11 @@ public final class UrlUtils {
         }
     }
 
+    /**
+     * 
+     * @param targetUrl
+     * @return 
+     */
     public static String checkURLAvailable(String targetUrl) {
         try {
             URL url = new URL(targetUrl);
