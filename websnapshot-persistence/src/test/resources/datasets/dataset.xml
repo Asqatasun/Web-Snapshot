@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<dataset>
+    
+    <image id="1"/>
+    <image id="2"/>
+    <image id="3"/>
+    <image id="4"/>
+    <image id="5"/>
+    <image id="6"/>
+    <image id="7"/>
+    <image id="8"/>
+    
+    <snapshot id="1"
+              url="http://google.fr/"
+              date_of_creation="2013-10-29 17:12:44"
+              id_image="5"
+              width="1024"
+              height="768"
+    />
+    <snapshot id="2"
+              url="http://webthumbnail.org/"
+              date_of_creation="2013-08-29 17:21:42"
+              id_image="6"
+              width="1024"
+              height="768"
+    />
+    <snapshot id="3"
+              url="http://www.epitech.eu/"
+              date_of_creation="2013-08-16 01:00:00"
+              id_image="7"
+              width="1024"
+              height="768"
+    />
+    
+    <snapshot id="4"
+              url="http://www.epitech.eu/"
+              date_of_creation="2013-08-15 23:00:00"
+              id_image="8"
+              width="1024"
+              height="768"
+    />
+    
+    <!-- thumbnail -->
+    <thumbnail  id="1"
+                id_image="1"
+                id_snapshot="1"
+                width="270"
+                height="170"
+    />
+    
+    <thumbnail  id="2"
+                id_image="2"
+                id_snapshot="2"
+                width="500"
+                height="500"
+    />
+    
+    <thumbnail  id="3"
+                id_image="3"
+                id_snapshot="3"    
+                width="1024"
+                height="768"
+    />
+    
+    <thumbnail  id="4"
+                id_image="4"
+                id_snapshot="4"    
+                width="1024"
+                height="768"
+    />
+
+    
+</dataset>

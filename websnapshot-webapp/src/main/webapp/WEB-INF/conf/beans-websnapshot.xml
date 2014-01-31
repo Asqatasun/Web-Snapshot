@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!-- DAO -->
+    
+    <bean id="thumbnailDAO" class="org.opens.websnapshot.entity.dao.ThumbnailDAOImpl"/>
+   
+    <bean id="snapshotDAO" class="org.opens.websnapshot.entity.dao.SnapshotDAOImpl"/>
+
+    <bean id="imageDAO" class="org.opens.websnapshot.entity.dao.ImageDAOImpl"/>
+     
+    <!-- Data services -->
+
+    <bean id="thumbnailDataService" class="org.opens.websnapshot.entity.service.ThumbnailDataServiceImpl">
+        <property name="entityDao">
+            <ref bean="thumbnailDAO"/>
+        </property>
+        <property name="entityFactory">
+            <ref bean="thumbnailFactory"/>
+        </property>
+        <property name="snapshotCreator">
+            <ref bean="snapshotCreator"/>
+        </property>
+        <property name="snapshotDataService">
+            <ref bean="snapshotDataService"/>
+        </property>
+        <property name="imageDataService">
+            <ref bean="imageDataService"/>
+        </property>
+    </bean>
+
+    <bean id="snapshotDataService" class="org.opens.websnapshot.entity.service.SnapshotDataServiceImpl">
+        <property name="entityDao">
+            <ref bean="snapshotDAO"/>
+        </property>
+        <property name="entityFactory">
+            <ref bean="snapshotFactory"/>
+        </property>
+        <property name="snapshotCreator">
+            <ref bean="snapshotCreator"/>
+        </property>
+        <property name="imageDataService">
+            <ref bean="imageDataService"/>
+        </property>
+    </bean>
+
+    <bean id="imageDataService" class="org.opens.websnapshot.entity.service.ImageDataServiceImpl">
+        <property name="entityDao">
+            <ref bean="imageDAO"/>
+        </property>
+        <property name="entityFactory">
+            <ref bean="imageFactory"/>
+        </property>
+    </bean>
+    
+    <!-- factory -->
+     
+    <bean id="thumbnailFactory" class="org.opens.websnapshot.entity.factory.ThumbnailFactoryImpl"/>
+ 
+    <bean id="snapshotFactory" class="org.opens.websnapshot.entity.factory.SnapshotFactoryImpl"/>
+  
+    <bean id="imageFactory" class="org.opens.websnapshot.entity.factory.ImageFactoryImpl"/>
+    
+    <!-- service -->
+
+    <bean id="snapshotCreator" class="org.opens.websnapshot.service.SnapshotCreatorImpl">
+        <property name="webDriver" value="phantomJS"/>
+    </bean>
+
+</beans>
