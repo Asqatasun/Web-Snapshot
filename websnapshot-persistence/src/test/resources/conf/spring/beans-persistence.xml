@@ -11,7 +11,6 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> 
-    <!--<bean id="entityManagerFactory" class="org.hibernate.ejb.EntityManagerFactoryImpl">--> 
         <property name="dataSource" ref="dataSource"/>
         <property name="persistenceXmlLocation" value="src/test/resources/conf/persistence.xml"/>
         <property name="jpaProperties">

@@ -43,7 +43,7 @@ public class ImageImpl implements Image, Serializable {
     @Column(name = "id")
     protected Long id;
     @Lob
-    @Column(name = "data")
+    @Column(name = "raw_data")
     protected byte[] image;
 
     @Override
