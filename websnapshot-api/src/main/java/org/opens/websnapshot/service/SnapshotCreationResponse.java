@@ -17,70 +17,38 @@
  *
  * Contact us by mail: open-s AT open-s DOT com
  */
-package org.opens.websnapshot.entity;
+package org.opens.websnapshot.service;
 
-import java.util.Date;
-import org.opens.tanaguru.sdk.entity.Entity;
+/**
+ *
+ * @author alingua
+ */
+public interface SnapshotCreationResponse {
 
-public interface Snapshot extends Entity {
-
-    /**
-     *
-     * @return the id of image from Image entity
-     */
-    Image getImage();
+    static String SUCCESS = "OK";
 
     /**
      *
-     * @param image
+     * @return
      */
-    void setImage(Image image);
+    byte[] getRawImage();
 
     /**
      *
-     * @return the url of the image
+     * @return
      */
-    String getUrl();
+    int getWidth();
 
     /**
      *
-     * @param url
+     * @return
      */
-    void setUrl(String url);
+    int getHeight();
 
     /**
      *
-     * @return the date of creating snapshot
+     * @return
      */
-    Date getDateOfCreation();
+    String getStatus();
 
-    /**
-     *
-     * @param date
-     */
-    void setDateOfCreation(Date date);
-
-    /**
-     *
-     * @return the width of the snapshot
-     */
-    Long getWidth();
-
-    /**
-     *
-     * @param width
-     */
-    void setWidth(Long width);
-
-    /**
-     *
-     * @return the height of the snapshot
-     */
-    Long getHeight();
-
-    /**
-     *
-     * @param height
-     */
-    void setHeight(Long height);
 }

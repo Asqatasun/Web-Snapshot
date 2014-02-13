@@ -17,41 +17,49 @@
  *
  * Contact us by mail: open-s AT open-s DOT com
  */
-package org.opens.websnapshot.entity.dao;
+package org.opens.websnapshot.webapp.controller;
 
 import java.util.Date;
-import org.opens.tanaguru.sdk.entity.dao.GenericDAO;
-import org.opens.websnapshot.entity.Thumbnail;
+import org.opens.websnapshot.entity.Image;
+import org.opens.websnapshot.entity.Image.Status;
 
 /**
  *
  * @author alingua
  */
-public interface ThumbnailDAO extends GenericDAO<Thumbnail, Long> {
+public class JsonImage {
 
-    /**
-     *
-     * @param url
-     * @param date
-     * @param width
-     * @param height
-     * @return
-     */
-    Thumbnail findThumbnailFromUrlAndWidthAndHeight(String url, int width, int height);
-    
-    /**
-     * 
-     * @param url
-     * @param date
-     * @param width
-     * @param height
-     * @return 
-     */
-    Thumbnail findThumbnailFromDateAndUrlAndWidthAndHeight(String url, Date date, int width, int height);
+    private Image image;
 
-    /**
-     *
-     * @return the number of Thumbnail in database
-     */
-    Long count();
+    public JsonImage(Image image) {
+        this.image = image;
+    }
+
+    public Long getId() {
+        return image.getId();
+    }
+
+    public int getHeight() {
+        return image.getHeight();
+    }
+
+    public int getWidth() {
+        return image.getWidth();
+    }
+
+    public Status getStatus() {
+        return image.getStatus();
+    }
+
+    public Date getDateOfCreation() {
+        return image.getDateOfCreation();
+    }
+
+    public String getUrl() {
+        return image.getUrl().getUrl();
+    }
+
+    public boolean getIsCanonical() {
+        return image.getIsCanonical();
+    }
 }

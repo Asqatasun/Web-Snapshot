@@ -17,21 +17,21 @@
  *
  * Contact us by mail: open-s AT open-s DOT com
  */
-package org.opens.websnapshot.entity.dao;
+package org.opens.websnapshot.entity.service;
 
-import java.util.Date;
-import org.opens.tanaguru.sdk.entity.dao.GenericDAO;
-import org.opens.websnapshot.entity.Snapshot;
+import org.opens.tanaguru.sdk.entity.service.GenericDataService;
+import org.opens.websnapshot.entity.Url;
 
 /**
  *
  * @author alingua
  */
-public interface SnapshotDAO extends GenericDAO<Snapshot, Long> {
+public interface UrlDataService extends GenericDataService<Url, Long> {
 
-    Snapshot findSnapshotByUrl(String url);
-
-    Snapshot findSnapshotByUrlAndDate(String url, Date date);
-
-    Long count();
+    /**
+     *
+     * @param url
+     * @return the url object
+     */
+    Url getUrlFromStringUrl(String url);
 }

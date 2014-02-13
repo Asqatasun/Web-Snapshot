@@ -19,12 +19,17 @@
  */
 package org.opens.websnapshot.entity.dao;
 
+import java.util.Date;
 import org.opens.tanaguru.sdk.entity.dao.GenericDAO;
 import org.opens.websnapshot.entity.Image;
 
 public interface ImageDAO extends GenericDAO<Image, Long> {
 
-    Image findImageById(int id);
+    Image findImageByWidthAndHeightAndUrl(int width, int height, String url);
+
+    Image findImageFromDateAndUrlAndWidthAndHeight(String url, Date date, int width, int height);
+
+    Image findCanonicalImageByUrl(String url);
 
     Long count();
 }

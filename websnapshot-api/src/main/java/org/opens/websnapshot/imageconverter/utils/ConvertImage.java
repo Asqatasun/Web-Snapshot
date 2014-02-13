@@ -34,8 +34,8 @@ import net.coobird.thumbnailator.geometry.Positions;
 public final class ConvertImage {
 
     private static final int TEXT_SIZE = 14;
-    private static final int IMAGE_WIDTH = 300;
-    private static final int IMAGE_HEIGHT = 200;
+    private static final int IMAGE_WIDTH = 270;
+    private static final int IMAGE_HEIGHT = 170;
     private static final int IMAGE_TEXT_POSITION = 20;
 
     /**

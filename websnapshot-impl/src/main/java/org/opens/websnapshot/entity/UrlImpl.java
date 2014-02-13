@@ -20,7 +20,11 @@
 package org.opens.websnapshot.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,46 +32,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author alingua
  */
 @Entity
-@Table(name = "thumbnail")
+@Table(name = "url")
 @XmlRootElement
-public class ThumbnailImpl implements Thumbnail, Serializable {
+public class UrlImpl implements Url, Serializable {
 
-    private static final int HASH_NUMBER = 7;
-    private static final int HASH_COEFFICIENT = 61;
+    private static final int HASH_NUMBER = 5;
+    private static final int HASH_COEFFICIENT = 67;
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Long id;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_image")
-    private ImageImpl image;
-    @OneToOne
-    @JoinColumn(name = "id_snapshot")
-    private SnapshotImpl snapshot;
-    @Column(name = "width")
-    private int width;
-    @Column(name = "height")
-    private int height;
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public void setHeight(int height) {
-        this.height = height;
-    }
+    @Column(name = "url")
+    private String url;
 
     @Override
     public Long getId() {
@@ -80,23 +56,13 @@ public class ThumbnailImpl implements Thumbnail, Serializable {
     }
 
     @Override
-    public Image getImage() {
-        return image;
+    public String getUrl() {
+        return url;
     }
 
     @Override
-    public void setImage(Image image) {
-        this.image = (ImageImpl) image;
-    }
-
-    @Override
-    public Snapshot getSnapshot() {
-        return snapshot;
-    }
-
-    @Override
-    public void setSnapshot(Snapshot snapshot) {
-        this.snapshot = (SnapshotImpl) snapshot;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
@@ -107,8 +73,11 @@ public class ThumbnailImpl implements Thumbnail, Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ThumbnailImpl other = (ThumbnailImpl) obj;
+        final UrlImpl other = (UrlImpl) obj;
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if ((this.url == null) ? (other.url != null) : !this.url.equals(other.url)) {
             return false;
         }
         return true;
@@ -118,6 +87,7 @@ public class ThumbnailImpl implements Thumbnail, Serializable {
     public int hashCode() {
         int hash = HASH_NUMBER;
         hash = HASH_COEFFICIENT * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = HASH_COEFFICIENT * hash + (this.url != null ? this.url.hashCode() : 0);
         return hash;
     }
 }

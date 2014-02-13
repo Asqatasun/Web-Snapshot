@@ -25,53 +25,17 @@ import org.opens.tanaguru.sdk.entity.Entity;
  *
  * @author alingua
  */
-public interface Thumbnail extends Entity {
+public interface Url extends Entity {
 
     /**
      *
-     * @return the image id from the image entity
+     * @return the url of the image
      */
-    Image getImage();
+    String getUrl();
 
     /**
      *
-     * @param idImage
+     * @param url
      */
-    void setImage(Image image);
-
-    /**
-     *
-     * @return the snapshot id from the snapshot entity
-     */
-    Snapshot getSnapshot();
-
-    /**
-     *
-     * @param idSnapshot
-     */
-    void setSnapshot(Snapshot idSnapshot);
-
-    /**
-     * 
-     * @return the width of the thumbnail
-     */
-    int getWidth();
-
-    /**
-     * 
-     * @param width 
-     */
-    void setWidth(int width);
-
-    /**
-     * 
-     * @return the height of the thumbnail
-     */
-    int getHeight();
-
-    /**
-     * 
-     * @param height 
-     */
-    void setHeight(int height);
+    void setUrl(String url);
 }

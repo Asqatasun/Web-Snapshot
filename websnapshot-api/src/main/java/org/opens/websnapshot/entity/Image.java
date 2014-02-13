@@ -19,20 +19,117 @@
  */
 package org.opens.websnapshot.entity;
 
+import java.util.Date;
 import org.opens.tanaguru.sdk.entity.Entity;
 
 public interface Image extends Entity {
 
+    enum Status {
+        
+        CREATED("CREATED"),
+        IN_PROGRESS("IN_PROGRESS"),
+        ERROR("ERROR"),
+        QUEUED("QUEUED"),
+        HACK_CREATED("HACK_CREATED");
+
+        private final String text;
+        /**
+         * @param text
+         */
+        private Status(final String text) {
+            this.text = text;
+        }
+
+        /* (non-Javadoc)
+         * @see java.lang.Enum#toString()
+         */
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
+
     /**
-     * 
-     * @return 
+     *
+     * @return the date of creating snapshot
+     */
+    Date getDateOfCreation();
+
+    /**
+     *
+     * @param date
+     */
+    void setDateOfCreation(Date date);
+
+    /**
+     *
+     * @return the width of the image
+     */
+    int getWidth();
+
+    /**
+     *
+     * @param width
+     */
+    void setWidth(int width);
+
+    /**
+     *
+     * @return the height of the image
+     */
+    int getHeight();
+
+    /**
+     *
+     * @param height
+     */
+    void setHeight(int height);
+
+    /**
+     *
+     * @return
      */
     byte[] getRawData();
 
     /**
-     * 
-     * @param thumbnail 
+     *
+     * @param thumbnail
      */
     void setRawData(byte[] thumbnail);
 
+    /**
+     *
+     * @return true if the image is the canonical format
+     */
+    boolean getIsCanonical();
+
+    /**
+     *
+     * @param canonical
+     */
+    void setIsCanonical(boolean canonical);
+
+    /**
+     *
+     * @return the status : CREATED, IN_PROGRESS, ERROR, QUEUED
+     */
+    Status getStatus();
+
+    /**
+     *
+     * @param status
+     */
+    void setStatus(Status status);
+
+    /**
+     *
+     * @return the url entity
+     */
+    Url getUrl();
+
+    /**
+     *
+     * @param url
+     */
+    void setUrl(Url url);
 }

@@ -32,5 +32,4 @@ public class ImageFactoryImpl implements ImageFactory {
     public Image create() {
         return new ImageImpl();
     }
-
 }

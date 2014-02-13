@@ -35,6 +35,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.opens.websnapshot.urlmanager.utils.UrlUtils;
 
 public class SnapshotCreatorImpl implements SnapshotCreator {
 
@@ -77,13 +78,16 @@ public class SnapshotCreatorImpl implements SnapshotCreator {
     }
 
     @Override
-    public byte[] getScreenshot(String url) {
+    public SnapshotCreationResponse requestSnapshotCreation(String url) {
         RemoteWebDriver driver = getWebDriver(windowWidth, windowHeight, webDriver);
-        loadPage(driver, url);
+        String status = loadPage(driver, url);
+        if (!status.equals(SnapshotCreationResponse.SUCCESS)) {
+            return new SnapshotCreationResponseImpl(null, status);
+        }
         try {
             BufferedImage thumbnail = takeScreenshot(driver);
             closeDriver(driver);
-            return convertThumbnailToByteArray(thumbnail);
+            return new SnapshotCreationResponseImpl(thumbnail, status);
         } catch (IOException ex) {
         }
         closeDriver(driver);
@@ -114,12 +118,19 @@ public class SnapshotCreatorImpl implements SnapshotCreator {
      * @param driver
      * @param url
      */
-    private void loadPage(RemoteWebDriver driver, String url) {
+    private String loadPage(RemoteWebDriver driver, String url) {
         driver.get(url);
         driver.executeScript("if (getComputedStyle(document.body, null).backgroundColor === 'rgba(0, 0, 0, 0)'"
                 + "|| getComputedStyle(document.body, null).backgroundColor === 'transparent') {"
                 + "document.body.style.backgroundColor = 'white';"
                 + "}");
+        if (!url.equals(driver.getCurrentUrl()) ) {
+            String urlAvailibility = UrlUtils.checkURLAvailable(driver.getCurrentUrl());
+            if (!urlAvailibility.equals(UrlUtils.URL_AVAILABLE)) {
+                return urlAvailibility;
+            }
+        }
+        return SnapshotCreationResponse.SUCCESS;
     }
 
     /**
