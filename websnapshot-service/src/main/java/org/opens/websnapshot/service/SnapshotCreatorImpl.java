@@ -20,7 +20,6 @@
 package org.opens.websnapshot.service;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -124,7 +123,7 @@ public class SnapshotCreatorImpl implements SnapshotCreator {
                 + "|| getComputedStyle(document.body, null).backgroundColor === 'transparent') {"
                 + "document.body.style.backgroundColor = 'white';"
                 + "}");
-        if (!url.equals(driver.getCurrentUrl()) ) {
+        if (!url.equals(driver.getCurrentUrl())) {
             String urlAvailibility = UrlUtils.checkURLAvailable(driver.getCurrentUrl());
             if (!urlAvailibility.equals(UrlUtils.URL_AVAILABLE)) {
                 return urlAvailibility;
