@@ -66,7 +66,7 @@ public class IndexController {
         // if the parameters are not valid, we return an auto-generated image
         // with a text that handles the error type
         if (!requestStatus.equalsIgnoreCase(SUCCESS_HTTP_REQUEST)) {
-            return createErrorMessage(requestStatus, headers);
+            return createErrorMessage(requestStatus, headers, Integer.valueOf(width), Integer.valueOf(height));
         }
 
 
@@ -80,13 +80,13 @@ public class IndexController {
                     Integer.valueOf(height),
                     url,
                     convertDate);
-            return testImageAndReturnedIt(image, headers, status);
+            return testImageAndReturnedIt(image, headers, Integer.valueOf(width), Integer.valueOf(height), status);
         } else {
             Image image = imageDataService.getImageFromWidthAndHeightAndUrl(
                     Integer.valueOf(width),
                     Integer.valueOf(height),
                     url);
-            return testImageAndReturnedIt(image, headers, status);
+            return testImageAndReturnedIt(image, headers, Integer.valueOf(width), Integer.valueOf(height), status);
         }
     }
 
@@ -96,9 +96,12 @@ public class IndexController {
      * @param headers
      * @return an auto-generated image that handles the error message
      */
-    private HttpEntity<byte[]> createErrorMessage(String errorMessage, HttpHeaders headers) throws IOException {
+    private HttpEntity<byte[]> createErrorMessage(String errorMessage,
+            HttpHeaders headers,
+            int width,
+            int height) throws IOException {
         return new HttpEntity<byte[]>(
-                ConvertImage.createThumbnailFromErrorMessage(errorMessage),
+                ConvertImage.createThumbnailFromErrorMessage(errorMessage, width, height),
                 headers);
     }
 
@@ -122,9 +125,9 @@ public class IndexController {
      * @return
      * @throws IOException
      */
-    private HttpEntity<?> testImageAndReturnedIt(Image image, HttpHeaders headers, boolean status) throws IOException {
+    private HttpEntity<?> testImageAndReturnedIt(Image image, HttpHeaders headers, int width, int height, boolean status) throws IOException {
         if (image == null) {
-            return createErrorMessage("error creating thumbnail", headers);
+            return createErrorMessage("error creating thumbnail", headers, width, height);
         }
         if (status) {
             JsonImage jsonImage = new JsonImage(image);
@@ -133,7 +136,7 @@ public class IndexController {
         if (image.getStatus().equals(Status.CREATED)) {
             return new HttpEntity<byte[]>(image.getRawData(), headers);
         } else {
-            return createErrorMessage(image.getStatus().toString(), headers);
+            return createErrorMessage(image.getStatus().toString(), headers, width, height);
         }
     }
 

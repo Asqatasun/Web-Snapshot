@@ -183,7 +183,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
             delete(canonicalImage.getId());
             Image errorMockImage = createImageWithProperties(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, url, true);
             try {
-                errorMockImage.setRawData(ConvertImage.createThumbnailFromErrorMessage(response.getStatus()));
+                errorMockImage.setRawData(ConvertImage.createThumbnailFromErrorMessage(response.getStatus(), DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT));
                 errorMockImage.setStatus(Status.HACK_CREATED);
                 return errorMockImage;
             } catch (IOException ex) {

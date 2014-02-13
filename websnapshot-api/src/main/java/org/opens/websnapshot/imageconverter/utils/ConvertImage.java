@@ -33,10 +33,8 @@ import net.coobird.thumbnailator.geometry.Positions;
 
 public final class ConvertImage {
 
-    private static final int TEXT_SIZE = 14;
-    private static final int IMAGE_WIDTH = 270;
-    private static final int IMAGE_HEIGHT = 170;
-    private static final int IMAGE_TEXT_POSITION = 20;
+    private static final int TEXT_SIZE = 60;
+    private static final int IMAGE_TEXT_POSITION = 80;
 
     /**
      * private constructor
@@ -49,10 +47,10 @@ public final class ConvertImage {
      * @param httpResponse
      * @return
      */
-    public static byte[] createThumbnailFromErrorMessage(String httpResponse) throws IOException {
+    public static byte[] createThumbnailFromErrorMessage(String httpResponse, int width ,int height) throws IOException {
         Font f = new Font(Font.MONOSPACED, Font.PLAIN, TEXT_SIZE);
 
-        BufferedImage img = new BufferedImage(IMAGE_WIDTH, IMAGE_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
+        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g = img.createGraphics();
         g.setPaint(new Color(0, 0, 0));
         g.fillRect(0, 0, img.getWidth(), img.getHeight());
