@@ -25,7 +25,7 @@ package org.opens.websnapshot.service;
  */
 public interface SnapshotCreationResponse {
 
-    static String SUCCESS = "OK";
+    static final String SUCCESS = "OK";
 
     /**
      *

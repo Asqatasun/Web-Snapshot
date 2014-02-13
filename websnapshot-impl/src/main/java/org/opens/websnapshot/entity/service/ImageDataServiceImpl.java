@@ -36,6 +36,8 @@ import org.opens.websnapshot.service.SnapshotCreator;
 public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long>
         implements ImageDataService {
 
+    private static final int DEFAULT_WINDOW_WIDTH = 1024;
+    private static final int DEFAULT_WINDOW_HEIGHT = 768;
     private static final Logger LOGGER = Logger.getLogger(ImageDataServiceImpl.class);
     private static final long DEFAULT_LIFETIME = 3000000;
     private long lifetime = DEFAULT_LIFETIME;
@@ -89,10 +91,8 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
     @Override
     public Image getImageFromWidthAndHeightAndUrlAndDate(int width, int height, String url, Date date) {
         Image image = ((ImageDAO) entityDao).findImageFromDateAndUrlAndWidthAndHeight(url, date, width, height);
-//        try {
         if (image != null) {
             return image;
-//        } catch (NoResultException nre) {
         } else {
             LOGGER.debug("The requested image with width: " + width
                     + " height: " + height
@@ -160,7 +160,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
      * @return a canonical image (with no resizing)
      */
     private Image createCanonicalImage(String url) {
-        Image canonicalImage = createImageWithProperties(1024, 768, url, true);
+        Image canonicalImage = createImageWithProperties(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, url, true);
         canonicalImage.setStatus(Status.IN_PROGRESS);
         canonicalImage = saveOrUpdate(canonicalImage);
 
@@ -181,7 +181,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
             return saveOrUpdate(canonicalImage);
         } else {
             delete(canonicalImage.getId());
-            Image errorMockImage = createImageWithProperties(1024, 768, url, true);
+            Image errorMockImage = createImageWithProperties(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, url, true);
             try {
                 errorMockImage.setRawData(ConvertImage.createThumbnailFromErrorMessage(response.getStatus()));
                 errorMockImage.setStatus(Status.HACK_CREATED);

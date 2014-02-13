@@ -78,12 +78,12 @@ public class ImageImpl implements Image, Serializable {
 
     @Override
     public Date getDateOfCreation() {
-        return dateOfCreation;
+        return (Date) dateOfCreation.clone();
     }
 
     @Override
     public void setDateOfCreation(Date dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
+        this.dateOfCreation = (Date) dateOfCreation.clone();
     }
 
     @Override

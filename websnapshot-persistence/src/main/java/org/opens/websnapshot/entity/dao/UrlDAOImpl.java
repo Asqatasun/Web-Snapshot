@@ -44,11 +44,7 @@ public class UrlDAOImpl extends AbstractJPADAO<Url, Long>
                 + "WHERE u.url LIKE :url");
         query.setParameter("url", url);
         query.setMaxResults(1);
-//        try {
-            return (Url) query.getSingleResult();
-//        } catch (NoResultException nre) {
-//            return null;
-//        }
+        return (Url) query.getSingleResult();
     }
 
     @Override

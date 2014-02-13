@@ -152,19 +152,4 @@ public class SnapshotCreatorImpl implements SnapshotCreator {
 
         return ImageIO.read(rawImage);
     }
-
-    /**
-     *
-     * @param thumbnail
-     * @return
-     * @throws IOException
-     */
-    private byte[] convertThumbnailToByteArray(BufferedImage thumbnail) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(thumbnail, "png", baos);
-        baos.flush();
-        byte[] imageInByte = baos.toByteArray();
-        baos.close();
-        return imageInByte;
-    }
 }
