@@ -148,7 +148,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
      * @return the no canonical image
      */
     private Image createCanonicalAndNoCanonicalImage(int width, int height, String url) {
-        Image image = createCanonicalImage(url);
+        Image image = createCanonicalImage(url, width, height);
         return createNotCanonicalImage(image, width, height, url);
     }
 
@@ -159,7 +159,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
      * @param url
      * @return a canonical image (with no resizing)
      */
-    private Image createCanonicalImage(String url) {
+    private Image createCanonicalImage(String url, int width, int height) {
         Image canonicalImage = createImageWithProperties(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, url, true);
         canonicalImage.setStatus(Status.IN_PROGRESS);
         canonicalImage = saveOrUpdate(canonicalImage);
@@ -183,7 +183,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
             delete(canonicalImage.getId());
             Image errorMockImage = createImageWithProperties(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, url, true);
             try {
-                errorMockImage.setRawData(ConvertImage.createThumbnailFromErrorMessage(response.getStatus(), DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT));
+                errorMockImage.setRawData(ConvertImage.createThumbnailFromErrorMessage(response.getStatus(), width, height));
                 errorMockImage.setStatus(Status.HACK_CREATED);
                 return errorMockImage;
             } catch (IOException ex) {
