@@ -17,45 +17,16 @@
  *
  * Contact us by mail: open-s AT open-s DOT com
  */
-package org.opens.websnapshot.entity.service;
+package org.opens.websnapshot.entity.factory;
 
-import java.util.Date;
-import org.opens.tanaguru.sdk.entity.service.GenericDataService;
-import org.opens.websnapshot.entity.Snapshot;
+import org.opens.tanaguru.sdk.entity.factory.GenericFactory;
+import org.opens.websnapshot.entity.Url;
 
 /**
  *
  * @author alingua
  */
-public interface SnapshotDataService extends GenericDataService<Snapshot, Long> {
+public interface UrlFactory extends GenericFactory<Url> {
 
-    /**
-     *
-     * @param url
-     * @return
-     */
-    Snapshot getSnapshotFromUrl(String url);
-
-    /**
-     *
-     * @param url
-     * @param date
-     * @return
-     */
-    Snapshot getSnapshotFromUrlandDate(String url, Date date);
-
-    /**
-     * 
-     * @param url
-     * @param token
-     * @param identifier
-     * @return 
-     */
-    Snapshot getSnapshotFromScenario(String url, String token, String identifier);
-    
-    /**
-     *
-     * @return
-     */
-    Long getCount();
+    Url create(String url);
 }

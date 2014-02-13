@@ -24,8 +24,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.opens.websnapshot.entity.Thumbnail;
-import org.opens.websnapshot.entity.service.ThumbnailDataService;
+import org.opens.websnapshot.entity.Image;
+import org.opens.websnapshot.entity.Image.Status;
+import org.opens.websnapshot.entity.service.ImageDataService;
 import org.opens.websnapshot.imageconverter.utils.ConvertImage;
 import org.opens.websnapshot.urlmanager.utils.UrlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,15 +48,16 @@ public class IndexController {
 
     private static final String SUCCESS_HTTP_REQUEST = "OK";
     @Autowired
-    private ThumbnailDataService thumbnailDataService;
+    private ImageDataService imageDataService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
-    public HttpEntity<byte[]> getThumbnail(
+    public HttpEntity<?> getThumbnail(
             @RequestParam(value = "url", required = true) String url,
             @RequestParam(value = "width", required = true) String width,
             @RequestParam(value = "height", required = true) String height,
-            @RequestParam(value = "date", required = false) String date) throws IOException {
+            @RequestParam(value = "date", required = false) String date,
+            @RequestParam(value = "status", required = false) boolean status) throws IOException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
@@ -64,33 +66,78 @@ public class IndexController {
         // if the parameters are not valid, we return an auto-generated image
         // with a text that handles the error type
         if (!requestStatus.equalsIgnoreCase(SUCCESS_HTTP_REQUEST)) {
-            byte[] errorMessage = ConvertImage.createThumbnailFromErrorMessage(requestStatus);
-            return new HttpEntity<byte[]>(errorMessage, headers);
+            return createErrorMessage(requestStatus, headers, Integer.valueOf(width), Integer.valueOf(height));
         }
+
+
 
         // regarding the presence of the date parameter, we retrieve the closest
         // thumbnail or the latest
         if (date != null) {
-            Date convertDate;
-            if (isLong(date)) {
-                convertDate = convertLongDateToDate(date);
-            } else {
-                convertDate = convertStringDateToDate(date);
-            }
-            Thumbnail thumbnail = thumbnailDataService.getThumbnailFromDateAndUrlAndWidthAndHeight(
-                    url,
-                    convertDate,
+            Date convertDate = convertDate(date);
+            Image image = imageDataService.getImageFromWidthAndHeightAndUrlAndDate(
                     Integer.valueOf(width),
-                    Integer.valueOf(height));
-            return new HttpEntity<byte[]>(thumbnail.getSnapshot().getImage().getRawData(), headers);
+                    Integer.valueOf(height),
+                    url,
+                    convertDate);
+            return testImageAndReturnedIt(image, headers, Integer.valueOf(width), Integer.valueOf(height), status);
         } else {
-            Thumbnail thumbnail = thumbnailDataService.getThumbnailFromUrlAndWidthAndHeight(
-                    url,
+            Image image = imageDataService.getImageFromWidthAndHeightAndUrl(
                     Integer.valueOf(width),
-                    Integer.valueOf(height));
-            return new HttpEntity<byte[]>(thumbnail.getImage().getRawData(), headers);
+                    Integer.valueOf(height),
+                    url);
+            return testImageAndReturnedIt(image, headers, Integer.valueOf(width), Integer.valueOf(height), status);
         }
+    }
 
+    /**
+     *
+     * @param errorMessage
+     * @param headers
+     * @return an auto-generated image that handles the error message
+     */
+    private HttpEntity<byte[]> createErrorMessage(String errorMessage,
+            HttpHeaders headers,
+            int width,
+            int height) throws IOException {
+        return new HttpEntity<byte[]>(
+                ConvertImage.createThumbnailFromErrorMessage(errorMessage, width, height),
+                headers);
+    }
+
+    /**
+     *
+     * @param date
+     * @return
+     */
+    private Date convertDate(String date) {
+        if (isLong(date)) {
+            return convertLongDateToDate(date);
+        } else {
+            return convertStringDateToDate(date);
+        }
+    }
+
+    /**
+     *
+     * @param image
+     * @param headers
+     * @return
+     * @throws IOException
+     */
+    private HttpEntity<?> testImageAndReturnedIt(Image image, HttpHeaders headers, int width, int height, boolean status) throws IOException {
+        if (image == null) {
+            return createErrorMessage("error creating thumbnail", headers, width, height);
+        }
+        if (status) {
+            JsonImage jsonImage = new JsonImage(image);
+            return new HttpEntity<JsonImage>(jsonImage);
+        }
+        if (image.getStatus().equals(Status.CREATED)) {
+            return new HttpEntity<byte[]>(image.getRawData(), headers);
+        } else {
+            return createErrorMessage(image.getStatus().toString(), headers, width, height);
+        }
     }
 
     private String getRequestStatus(String url, String width, String height, String date) {
@@ -101,7 +148,7 @@ public class IndexController {
             return "malformed url";
         }
         if (date != null && !isLong(date) && convertStringDateToDate(date) == null) {
-            return "invalid data format";
+            return "invalid date format";
         }
         return UrlUtils.checkURLAvailable(url);
     }
@@ -157,15 +204,4 @@ public class IndexController {
             return null;
         }
     }
-    //    @RequestMapping(value = "/data.html", method = RequestMethod.GET)
-    //    @ResponseBody
-    //    public JsonThumbnail getData(
-    //            ThumbnailImpl thumbnail,
-    //            @RequestParam(value = "url", required = true) String url,
-    //            @RequestParam(value = "size", required = true) int size) {
-    //        MappingJackson2HttpMessageConverter http = new MappingJackson2HttpMessageConverter();
-    //        thumbnail.setCreationDate(Calendar.getInstance().getTime());
-    //        thumbnail.setStatus(thumbnailDataService.getThumbnailFromUrl(url, size).getStatus());
-    //        return new JsonThumbnail(thumbnail);
-    //    }
 }

@@ -2,73 +2,117 @@
 
 <dataset>
     
-    <image id="1"/>
-    <image id="2"/>
-    <image id="3"/>
-    <image id="4"/>
-    <image id="5"/>
-    <image id="6"/>
-    <image id="7"/>
-    <image id="8"/>
-    
-    <snapshot id="1"
-              url="http://google.fr/"
-              date_of_creation="2013-10-29 17:12:44"
-              id_image="5"
-              width="1024"
-              height="768"
-    />
-    <snapshot id="2"
-              url="http://webthumbnail.org/"
-              date_of_creation="2013-08-29 17:21:42"
-              id_image="6"
-              width="1024"
-              height="768"
-    />
-    <snapshot id="3"
-              url="http://www.epitech.eu/"
-              date_of_creation="2013-08-16 01:00:00"
-              id_image="7"
-              width="1024"
-              height="768"
-    />
-    
-    <snapshot id="4"
-              url="http://www.epitech.eu/"
-              date_of_creation="2013-08-15 23:00:00"
-              id_image="8"
-              width="1024"
-              height="768"
-    />
-    
-    <!-- thumbnail -->
-    <thumbnail  id="1"
-                id_image="1"
-                id_snapshot="1"
-                width="270"
-                height="170"
-    />
-    
-    <thumbnail  id="2"
-                id_image="2"
-                id_snapshot="2"
-                width="500"
-                height="500"
-    />
-    
-    <thumbnail  id="3"
-                id_image="3"
-                id_snapshot="3"    
-                width="1024"
-                height="768"
-    />
-    
-    <thumbnail  id="4"
-                id_image="4"
-                id_snapshot="4"    
-                width="1024"
-                height="768"
+    <url id="1"
+         url="www.google.fr"
     />
 
+    <url id="2"
+         url="www.epitech.eu"
+    />
+
+    <url id="3"
+         url="www.facebook.com"
+    />
+
+    <url id="4"
+         url="www.tanaguru.com"
+    />
     
+    <image id="1"
+           date_of_creation="2013-10-29 17:12:44"
+           width="1024"
+           height="768"
+           is_canonical = "true"
+           status = "1"
+           id_url="1"
+    />
+
+    <image id="3"
+           date_of_creation="2013-10-29 17:14:44"
+           width="1024"
+           height="768"
+           is_canonical = "true"
+           status = "1"
+           id_url="3"
+    />
+
+    <image id="4"
+           date_of_creation="2013-10-29 17:15:44"
+           width="1024"
+           height="768"
+           is_canonical = "true"
+           status = "1"
+           id_url="4"
+    />
+
+    <image id="5"
+           date_of_creation="2013-10-29 17:12:47"
+           width="270"
+           height="170"
+           is_canonical = "false"
+           status = "1"
+           id_url="1"
+    />
+
+    <image id="6"
+           date_of_creation="2013-10-29 17:13:47"
+           width="270"
+           height="170"
+           is_canonical = "false"
+           status = "1"
+           id_url="2"
+    />
+
+    <image id="7"
+           date_of_creation="2013-10-29 17:14:47"
+           width="270"
+           height="170"
+           is_canonical = "false"
+           status = "1"
+           id_url="3"
+    />
+    
+    <image id="8"
+           date_of_creation="2013-10-29 17:15:47"
+           width="270"
+           height="170"
+           is_canonical = "false"
+           status = "1"
+           id_url="4"
+    />
+    
+    <image id="2"
+           date_of_creation="2013-08-15 23:59:59"
+           width="1024"
+           height="768"
+           is_canonical = "true"
+           status = "1"
+           id_url="2"
+    />
+    
+    <image id="9"
+           date_of_creation="2013-08-15 23:59:30"
+           width="1024"
+           height="768"
+           is_canonical = "true"
+           status = "1"
+           id_url="2"
+    />
+    
+    <image id="10"
+           date_of_creation="2013-08-16 00:01:05"
+           width="1024"
+           height="768"
+           is_canonical = "true"
+           status = "1"
+           id_url="2"
+    />
+    <image id="11"
+           date_of_creation="2013-08-16 00:01:00"
+           width="1024"
+           height="768"
+           is_canonical = "true"
+           status = "1"
+           id_url="2"
+    />
 </dataset>

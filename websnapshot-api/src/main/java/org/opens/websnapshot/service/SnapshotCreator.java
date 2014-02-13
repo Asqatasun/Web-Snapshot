@@ -30,5 +30,5 @@ public interface SnapshotCreator {
      * @param url
      * @return the raw thumnail
      */
-    byte[] getScreenshot(String url);
+    SnapshotCreationResponse requestSnapshotCreation(String url);
 }

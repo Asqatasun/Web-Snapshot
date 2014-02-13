@@ -19,6 +19,7 @@
  */
 package org.opens.websnapshot.entity.service;
 
+import java.util.Date;
 import org.opens.tanaguru.sdk.entity.service.GenericDataService;
 import org.opens.websnapshot.entity.Image;
 
@@ -27,11 +28,23 @@ import org.opens.websnapshot.entity.Image;
  * @author alingua
  */
 public interface ImageDataService extends GenericDataService<Image, Long> {
-    
+
     /**
-     * 
-     * @param id
-     * @return 
+     *
+     * @param width
+     * @param height
+     * @param url
+     * @return
      */
-    Image getImageFromId(int id);
+    Image getImageFromWidthAndHeightAndUrl(int width, int height, String url);
+
+    /**
+     *
+     * @param width
+     * @param height
+     * @param url
+     * @param date
+     * @return
+     */
+    Image getImageFromWidthAndHeightAndUrlAndDate(int width, int height, String url, Date date);
 }

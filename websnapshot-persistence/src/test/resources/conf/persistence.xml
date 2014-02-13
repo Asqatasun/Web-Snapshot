@@ -3,8 +3,7 @@
   <persistence-unit name="webthumbnail-test-pu" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>org.opens.websnapshot.entity.ImageImpl</class>
-    <class>org.opens.websnapshot.entity.SnapshotImpl</class>
-    <class>org.opens.websnapshot.entity.ThumbnailImpl</class>
+    <class>org.opens.websnapshot.entity.UrlImpl</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="create-drop"/>

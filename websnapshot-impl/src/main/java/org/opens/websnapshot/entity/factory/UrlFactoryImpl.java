@@ -19,26 +19,24 @@
  */
 package org.opens.websnapshot.entity.factory;
 
-import java.util.Calendar;
-import org.opens.websnapshot.entity.Snapshot;
-import org.opens.websnapshot.entity.SnapshotImpl;
+import org.opens.websnapshot.entity.Url;
+import org.opens.websnapshot.entity.UrlImpl;
 
-public class SnapshotFactoryImpl implements SnapshotFactory {
+public class UrlFactoryImpl implements UrlFactory {
 
-    public SnapshotFactoryImpl() {
+    public UrlFactoryImpl() {
         super();
     }
 
     @Override
-    public Snapshot create() {
-        return new SnapshotImpl();
+    public Url create() {
+        return new UrlImpl();
     }
 
     @Override
-    public Snapshot create(String url) {
-        Snapshot snapshot = create();
-        snapshot.setUrl(url);
-        snapshot.setDateOfCreation(Calendar.getInstance().getTime());
-        return snapshot;
+    public Url create(String url) {
+        Url newUrl = this.create();
+        newUrl.setUrl(url);
+        return newUrl;
     }
 }

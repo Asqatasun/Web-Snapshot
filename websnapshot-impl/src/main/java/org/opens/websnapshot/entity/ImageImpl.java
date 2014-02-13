@@ -20,14 +20,18 @@
 package org.opens.websnapshot.entity;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.opens.websnapshot.entity.Image.Status;
 
 /**
  *
@@ -38,15 +42,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ImageImpl implements Image, Serializable {
 
-    private static final int HASH_NUMBER = 3;
-    private static final int HASH_COEFFICIENT = 89;
+    private static final int HASH_NUMBER = 7;
+    private static final int HASH_COEFFICIENT = 59;
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Long id;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Column(name = "date_of_creation")
+    private Date dateOfCreation;
+    @Column(name = "width")
+    private int width;
+    @Column(name = "height")
+    private int height;
     @Lob
     @Column(name = "raw_data")
     private byte[] rawData;
+    @Column(name = "is_canonical")
+    private boolean isCanonical;
+    @Column(name = "status")
+    private Status status;
+    @ManyToOne
+    @JoinColumn(name = "id_url")
+    private UrlImpl url;
 
     @Override
     public Long getId() {
@@ -59,6 +77,36 @@ public class ImageImpl implements Image, Serializable {
     }
 
     @Override
+    public Date getDateOfCreation() {
+        return (Date) dateOfCreation.clone();
+    }
+
+    @Override
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = (Date) dateOfCreation.clone();
+    }
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    @Override
     public byte[] getRawData() {
         return rawData.clone();
     }
@@ -66,6 +114,36 @@ public class ImageImpl implements Image, Serializable {
     @Override
     public void setRawData(byte[] rawData) {
         this.rawData = rawData.clone();
+    }
+
+    @Override
+    public boolean getIsCanonical() {
+        return isCanonical;
+    }
+
+    @Override
+    public void setIsCanonical(boolean isCanonical) {
+        this.isCanonical = isCanonical;
+    }
+
+    @Override
+    public Status getStatus() {
+        return this.status;
+    }
+
+    @Override
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    @Override
+    public Url getUrl() {
+        return url;
+    }
+
+    @Override
+    public void setUrl(Url url) {
+        this.url = (UrlImpl) url;
     }
 
     @Override
@@ -80,7 +158,13 @@ public class ImageImpl implements Image, Serializable {
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
-        if (!Arrays.equals(this.rawData, other.rawData)) {
+        if (this.width != other.width) {
+            return false;
+        }
+        if (this.height != other.height) {
+            return false;
+        }
+        if (this.isCanonical != other.isCanonical) {
             return false;
         }
         return true;
@@ -90,7 +174,9 @@ public class ImageImpl implements Image, Serializable {
     public int hashCode() {
         int hash = HASH_NUMBER;
         hash = HASH_COEFFICIENT * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = HASH_COEFFICIENT * hash + Arrays.hashCode(this.rawData);
+        hash = HASH_COEFFICIENT * hash + this.width;
+        hash = HASH_COEFFICIENT * hash + this.height;
+        hash = HASH_COEFFICIENT * hash + (this.isCanonical ? 1 : 0);
         return hash;
     }
 }

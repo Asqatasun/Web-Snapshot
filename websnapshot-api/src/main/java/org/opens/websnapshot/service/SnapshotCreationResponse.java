@@ -17,41 +17,38 @@
  *
  * Contact us by mail: open-s AT open-s DOT com
  */
-package org.opens.websnapshot.entity.dao;
-
-import java.util.Date;
-import org.opens.tanaguru.sdk.entity.dao.GenericDAO;
-import org.opens.websnapshot.entity.Thumbnail;
+package org.opens.websnapshot.service;
 
 /**
  *
  * @author alingua
  */
-public interface ThumbnailDAO extends GenericDAO<Thumbnail, Long> {
+public interface SnapshotCreationResponse {
+
+    static final String SUCCESS = "OK";
 
     /**
      *
-     * @param url
-     * @param date
-     * @param width
-     * @param height
      * @return
      */
-    Thumbnail findThumbnailFromUrlAndWidthAndHeight(String url, int width, int height);
-    
-    /**
-     * 
-     * @param url
-     * @param date
-     * @param width
-     * @param height
-     * @return 
-     */
-    Thumbnail findThumbnailFromDateAndUrlAndWidthAndHeight(String url, Date date, int width, int height);
+    byte[] getRawImage();
 
     /**
      *
-     * @return the number of Thumbnail in database
+     * @return
      */
-    Long count();
+    int getWidth();
+
+    /**
+     *
+     * @return
+     */
+    int getHeight();
+
+    /**
+     *
+     * @return
+     */
+    String getStatus();
+
 }

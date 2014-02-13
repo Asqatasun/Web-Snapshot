@@ -17,61 +17,21 @@
  *
  * Contact us by mail: open-s AT open-s DOT com
  */
-package org.opens.websnapshot.entity;
+package org.opens.websnapshot.entity.service;
 
-import org.opens.tanaguru.sdk.entity.Entity;
+import org.opens.tanaguru.sdk.entity.service.GenericDataService;
+import org.opens.websnapshot.entity.Url;
 
 /**
  *
  * @author alingua
  */
-public interface Thumbnail extends Entity {
+public interface UrlDataService extends GenericDataService<Url, Long> {
 
     /**
      *
-     * @return the image id from the image entity
+     * @param url
+     * @return the url object
      */
-    Image getImage();
-
-    /**
-     *
-     * @param idImage
-     */
-    void setImage(Image image);
-
-    /**
-     *
-     * @return the snapshot id from the snapshot entity
-     */
-    Snapshot getSnapshot();
-
-    /**
-     *
-     * @param idSnapshot
-     */
-    void setSnapshot(Snapshot idSnapshot);
-
-    /**
-     * 
-     * @return the width of the thumbnail
-     */
-    int getWidth();
-
-    /**
-     * 
-     * @param width 
-     */
-    void setWidth(int width);
-
-    /**
-     * 
-     * @return the height of the thumbnail
-     */
-    int getHeight();
-
-    /**
-     * 
-     * @param height 
-     */
-    void setHeight(int height);
+    Url getUrlFromStringUrl(String url);
 }

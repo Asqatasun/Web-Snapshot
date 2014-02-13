@@ -19,22 +19,13 @@
  */
 package org.opens.websnapshot.entity;
 
-import java.util.Date;
 import org.opens.tanaguru.sdk.entity.Entity;
 
-public interface Snapshot extends Entity {
-
-    /**
-     *
-     * @return the id of image from Image entity
-     */
-    Image getImage();
-
-    /**
-     *
-     * @param image
-     */
-    void setImage(Image image);
+/**
+ *
+ * @author alingua
+ */
+public interface Url extends Entity {
 
     /**
      *
@@ -47,40 +38,4 @@ public interface Snapshot extends Entity {
      * @param url
      */
     void setUrl(String url);
-
-    /**
-     *
-     * @return the date of creating snapshot
-     */
-    Date getDateOfCreation();
-
-    /**
-     *
-     * @param date
-     */
-    void setDateOfCreation(Date date);
-
-    /**
-     *
-     * @return the width of the snapshot
-     */
-    Long getWidth();
-
-    /**
-     *
-     * @param width
-     */
-    void setWidth(Long width);
-
-    /**
-     *
-     * @return the height of the snapshot
-     */
-    Long getHeight();
-
-    /**
-     *
-     * @param height
-     */
-    void setHeight(Long height);
 }

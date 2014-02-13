@@ -17,21 +17,49 @@
  *
  * Contact us by mail: open-s AT open-s DOT com
  */
-package org.opens.websnapshot.entity.dao;
+package org.opens.websnapshot.webapp.controller;
 
 import java.util.Date;
-import org.opens.tanaguru.sdk.entity.dao.GenericDAO;
-import org.opens.websnapshot.entity.Snapshot;
+import org.opens.websnapshot.entity.Image;
+import org.opens.websnapshot.entity.Image.Status;
 
 /**
  *
  * @author alingua
  */
-public interface SnapshotDAO extends GenericDAO<Snapshot, Long> {
+public class JsonImage {
 
-    Snapshot findSnapshotByUrl(String url);
+    private Image image;
 
-    Snapshot findSnapshotByUrlAndDate(String url, Date date);
+    public JsonImage(Image image) {
+        this.image = image;
+    }
 
-    Long count();
+    public Long getId() {
+        return image.getId();
+    }
+
+    public int getHeight() {
+        return image.getHeight();
+    }
+
+    public int getWidth() {
+        return image.getWidth();
+    }
+
+    public Status getStatus() {
+        return image.getStatus();
+    }
+
+    public Date getDateOfCreation() {
+        return image.getDateOfCreation();
+    }
+
+    public String getUrl() {
+        return image.getUrl().getUrl();
+    }
+
+    public boolean getIsCanonical() {
+        return image.getIsCanonical();
+    }
 }

@@ -17,31 +17,19 @@
  *
  * Contact us by mail: open-s AT open-s DOT com
  */
-package org.opens.websnapshot.webapp.controller;
+package org.opens.websnapshot.entity.dao;
 
-import org.opens.websnapshot.entity.Thumbnail;
+import org.opens.tanaguru.sdk.entity.dao.GenericDAO;
+import org.opens.websnapshot.entity.Url;
 
-/**
- *
- * @author alingua
- */
-public class JsonThumbnail {
+public interface UrlDAO extends GenericDAO<Url, Long> {
 
-    private Thumbnail thumbnail;
+    /**
+     *
+     * @param url
+     * @return
+     */
+    Url findUrlByStringUrl(String url);
 
-    public JsonThumbnail(Thumbnail thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public Long getId() {
-        return thumbnail.getId();
-    }
-
-    public int getHeight() {
-        return thumbnail.getHeight();
-    }
-
-    public int getWidth() {
-        return thumbnail.getWidth();
-    }
+    Long count();
 }

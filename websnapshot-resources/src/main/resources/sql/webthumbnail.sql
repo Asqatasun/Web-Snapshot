@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Ven 31 Janvier 2014 à 13:41
--- Version du serveur: 5.5.34
+-- Généré le : Jeu 13 Février 2014 à 15:39
+-- Version du serveur: 5.5.35
 -- Version de PHP: 5.3.10-1ubuntu3.9
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
@@ -28,39 +28,25 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `image` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `raw_data` longblob,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `snapshot`
---
-
-CREATE TABLE IF NOT EXISTS `snapshot` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `url` varchar(255) DEFAULT NULL,
-  `token` bigint(20) DEFAULT NULL,
   `date_of_creation` datetime DEFAULT NULL,
-  `id_image` bigint(20) NOT NULL,
-  `width` bigint(20) DEFAULT NULL,
-  `height` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `thumbnail`
---
-
-CREATE TABLE IF NOT EXISTS `thumbnail` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `id_image` bigint(20) NOT NULL,
-  `id_snapshot` bigint(20) NOT NULL,
+  `id_url` bigint(20) NOT NULL,
   `width` int(20) DEFAULT NULL,
   `height` int(20) DEFAULT NULL,
+  `raw_data` longblob,
+  `is_canonical` bit(1) DEFAULT b'1',
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `url`
+--
+
+CREATE TABLE IF NOT EXISTS `url` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

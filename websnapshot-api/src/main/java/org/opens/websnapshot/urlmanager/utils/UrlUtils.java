@@ -26,6 +26,8 @@ import org.apache.commons.validator.routines.UrlValidator;
 
 public final class UrlUtils {
 
+    public static final String URL_AVAILABLE = "OK";
+    public static final String URL_NOT_AVAILABLE = "This url is not available";
     private static final int MIN_HTTP_VALID_CODE = 200;
     private static final int MAX_HTTP_VALID_CODE = 400;
 
@@ -36,20 +38,20 @@ public final class UrlUtils {
     }
 
     /**
-     * 
+     *
      * @param url
-     * @return 
+     * @return
      */
     public static boolean checkIfURLIsValid(String url) {
-        String[] schemes = {"http","https"};
-        UrlValidator urlValidator = new UrlValidator (schemes, UrlValidator.ALLOW_2_SLASHES);
+        String[] schemes = {"http", "https"};
+        UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.ALLOW_2_SLASHES);
         return urlValidator.isValid(url);
     }
 
     /**
-     * 
+     *
      * @param targetUrl
-     * @return 
+     * @return
      */
     public static String checkURLAvailable(String targetUrl) {
         try {
@@ -62,12 +64,23 @@ public final class UrlUtils {
 
             if (httpURLConnection.getResponseCode() >= MIN_HTTP_VALID_CODE
                     && httpURLConnection.getResponseCode() < MAX_HTTP_VALID_CODE) {
-                return "OK";
+                return URL_AVAILABLE;
+            }
+            urlConnection = url.openConnection();
+            httpURLConnection.disconnect();
+            HttpURLConnection.setFollowRedirects(true);
+            httpURLConnection = (HttpURLConnection) urlConnection;
+            httpURLConnection.setRequestMethod("GET");
+
+            if (httpURLConnection.getResponseCode()
+                    >= MIN_HTTP_VALID_CODE
+                    && httpURLConnection.getResponseCode() < MAX_HTTP_VALID_CODE) {
+                return URL_AVAILABLE;
             } else {
                 return Integer.toString(httpURLConnection.getResponseCode()) + " " + httpURLConnection.getResponseMessage();
             }
         } catch (Exception e) {
-            return "This url is not available";
+            return URL_NOT_AVAILABLE;
         }
     }
 }
