@@ -36,6 +36,12 @@ CREATE TABLE IF NOT EXISTS `image` (
   `is_canonical` bit(1) DEFAULT b'1',
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
+  INDEX `index_image` (`id_url` ASC) ,
+  CONSTRAINT `fk_image_url`
+    FOREIGN KEY (`id_url` )
+    REFERENCES `url` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
