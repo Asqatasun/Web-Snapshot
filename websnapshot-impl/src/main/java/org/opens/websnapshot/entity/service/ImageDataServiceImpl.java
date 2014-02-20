@@ -33,6 +33,8 @@ import org.opens.websnapshot.imageconverter.utils.ConvertImage;
 import org.opens.websnapshot.service.SnapshotCreationResponse;
 import org.opens.websnapshot.service.SnapshotCreator;
 
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
 public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long>
         implements ImageDataService {
 
@@ -40,6 +42,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
     private static final int DEFAULT_WINDOW_HEIGHT = 768;
     private static final Logger LOGGER = Logger.getLogger(ImageDataServiceImpl.class);
     private static final long DEFAULT_LIFETIME = 3000000;
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
     private long lifetime = DEFAULT_LIFETIME;
     private UrlDataService urlDataService;
     private SnapshotCreator snapshotCreator;
@@ -65,8 +68,24 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
         this.urlDataService = urlDataService;
     }
 
+    public ThreadPoolTaskExecutor getThreadPoolTaskExecutor() {
+        return threadPoolTaskExecutor;
+    }
+
+    public void setThreadPoolTaskExecutor(ThreadPoolTaskExecutor threadPoolTaskExecutor) {
+        this.threadPoolTaskExecutor = threadPoolTaskExecutor;
+    }
+
     public ImageDataServiceImpl() {
         super();
+    }
+
+    @Override
+    public Image forceImageCreation(String url) {
+        Image canonicalImage = createTechnicalCanonicalObject(url);
+        ImageCreationThread imageCreationThread = new ImageCreationThread(url, this, canonicalImage, DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
+        threadPoolTaskExecutor.submit(imageCreationThread);
+        return canonicalImage;
     }
 
     @Override
@@ -91,8 +110,10 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
     @Override
     public Image getImageFromWidthAndHeightAndUrlAndDate(int width, int height, String url, Date date) {
         Image image = ((ImageDAO) entityDao).findImageFromDateAndUrlAndWidthAndHeight(url, date, width, height);
-        if (image != null) {
+        if (image.getStatus().equals(Status.CREATED) || image.getStatus().equals(Status.IN_PROGRESS)) {
             return image;
+        } else if (image.getStatus() == Status.ERROR) {
+            return null;
         } else {
             LOGGER.debug("The requested image with width: " + width
                     + " height: " + height
@@ -148,8 +169,24 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
      * @return the no canonical image
      */
     private Image createCanonicalAndNoCanonicalImage(int width, int height, String url) {
-        Image image = createCanonicalImage(url, width, height);
+        Image image = createTechnicalCanonicalObject(url);
+        createCanonicalImage(image, url, width, height);
         return createNotCanonicalImage(image, width, height, url);
+    }
+
+    /**
+     *
+     * @param url
+     * @return
+     */
+    private Image createTechnicalCanonicalObject(String url) {
+        Image canonicalImage = createImageWithProperties(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, url, true);
+        canonicalImage.setStatus(Status.IN_PROGRESS);
+        return saveOrUpdate(canonicalImage);
+    }
+
+    private SnapshotCreationResponse getDataToCanonicalImage(String url) {
+        return snapshotCreator.requestSnapshotCreation(url);
     }
 
     /**
@@ -159,13 +196,9 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
      * @param url
      * @return a canonical image (with no resizing)
      */
-    private Image createCanonicalImage(String url, int width, int height) {
-        Image canonicalImage = createImageWithProperties(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, url, true);
-        canonicalImage.setStatus(Status.IN_PROGRESS);
-        canonicalImage = saveOrUpdate(canonicalImage);
-
-        SnapshotCreationResponse response =
-                snapshotCreator.requestSnapshotCreation(url);
+    @Override
+    public Image createCanonicalImage(Image canonicalImage, String url, int width, int height) {
+        SnapshotCreationResponse response = getDataToCanonicalImage(url);
 
         /*
          * Si l'image a un statut SUCCESS, on la créé puis on la sauvegarde en base.
@@ -257,5 +290,46 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
         // if the date of the last found snapshot is anterior than the current 
         // date minus the lifetime, we consider it as expired
         return (Calendar.getInstance().getTimeInMillis() - image.getDateOfCreation().getTime()) > lifetime;
+    }
+
+    private class ImageCreationThread implements Runnable {
+
+        private String url;
+        private ImageDataService imageDataService;
+        private Image canonicalImage;
+        private int width;
+        private int height;
+        private boolean isCreated = false;
+
+        public ImageCreationThread(String url, ImageDataService imageDataService, Image canonicalImage, int width, int height) {
+            this.url = url;
+            this.imageDataService = imageDataService;
+            this.canonicalImage = canonicalImage;
+            this.width = width;
+            this.height = height;
+        }
+
+        @Override
+        public void run() {
+            this.canonicalImage =
+                    imageDataService.createCanonicalImage(
+                    canonicalImage,
+                    url,
+                    width,
+                    height);
+            isCreated = true;
+        }
+
+        public Image getImage() {
+            return this.canonicalImage;
+        }
+
+        public void setImage(Image canonicalImage) {
+            this.canonicalImage = canonicalImage;
+        }
+
+        public boolean isCreated() {
+            return isCreated;
+        }
     }
 }

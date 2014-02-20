@@ -69,14 +69,14 @@ public class ImageDAOImplTest extends AbstractDaoTestCase {
         /* set-up instance */
         ImageDAO instance = getBean();
         Collection<Image> images = instance.findAll();
-        assertEquals(11, images.size());
+        assertEquals(12, images.size());
 
         Image image = new ImageImpl();
         /* run test */
         instance.create(image);
 
         images = instance.findAll();
-        assertEquals(12, images.size());
+        assertEquals(13, images.size());
     }
 
     /**
@@ -89,7 +89,7 @@ public class ImageDAOImplTest extends AbstractDaoTestCase {
         Image image = instance.findImageByWidthAndHeightAndUrl(1024, 768, "www.google.fr");
         assertEquals(Long.valueOf(1), image.getId());
         image = instance.findImageByWidthAndHeightAndUrl(1024, 768, "www.epitech.eu");
-        assertEquals(Long.valueOf(10), image.getId());
+        assertEquals(Long.valueOf(12), image.getId());
         image = instance.findImageByWidthAndHeightAndUrl(1024, 768, "www.facebook.com");
         assertEquals(Long.valueOf(3), image.getId());
         image = instance.findImageByWidthAndHeightAndUrl(1024, 768, "www.tanaguru.com");
@@ -130,18 +130,18 @@ public class ImageDAOImplTest extends AbstractDaoTestCase {
         cl.set(2013, Calendar.AUGUST, 16, 00, 01, 30);
         date = cl.getTime();
         returnedImage = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
-        assertEquals(Long.valueOf(10), returnedImage.getId());
+        assertEquals(Long.valueOf(12), returnedImage.getId());
 
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 16, 00, 00, 0);
         date = cl.getTime();
         returnedImage = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
-        assertEquals(Long.valueOf(2), returnedImage.getId());
+        assertEquals(Long.valueOf(11), returnedImage.getId());
 
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 15, 23, 59, 59);
         date = cl.getTime();
         returnedImage = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
-        assertEquals(Long.valueOf(2), returnedImage.getId());
+        assertEquals(Long.valueOf(11), returnedImage.getId());
     }
 }

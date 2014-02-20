@@ -25,6 +25,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.opens.tanaguru.sdk.entity.dao.jpa.AbstractJPADAO;
 import org.opens.websnapshot.entity.Image;
+import org.opens.websnapshot.entity.Image.Status;
 import org.opens.websnapshot.entity.ImageImpl;
 
 public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
@@ -93,22 +94,43 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
      * retourné une thumbnail.
      */
     private Image checkValidImageAndReturnTheClotest(String url, Date date, int width, int height) {
-        Image beforeImage = findBeforeImageFromDate(url, date, width, height);
+//        Image beforeImage = findBeforeImageFromDate(url, date, width, height);
         Image nextImage = findNextImageFromDate(url, date, width, height);
 
-        if (beforeImage == null) {
-            if (nextImage == null) {
-                return null;
-            } else {
-                return nextImage;
+        /// TODO
+
+        if (nextImage == null) {
+            Image snapshot = findNextCanonicalImageFromDate(url, date, width, height);
+            if (snapshot == null) {
+                Image errorImage = new ImageImpl();
+                errorImage.setStatus(Status.ERROR);
+                return errorImage;
             }
-        } else {
-            if (nextImage == null) {
-                return beforeImage;
-            } else {
-                return closestThumbnailFromDate(beforeImage, nextImage, date);
+            if (snapshot.getStatus() == Status.IN_PROGRESS) {
+                snapshot.setStatus(Status.IN_PROGRESS);
+                return snapshot;
             }
+            Image newImage = new ImageImpl();
+            newImage.setStatus(Status.MUST_BE_CREATE);
+            return newImage;
         }
+        return nextImage;
+
+//        Image nextImage = findCanonicalFromDate(url, date, width, height);
+
+//        if (beforeImage == null) {
+//            if (nextImage == null) {
+//                return null;
+//            } else {
+//                return nextImage;
+//            }
+//        } else {
+//            if (nextImage == null) {
+//                return beforeImage;
+//            } else {
+//                return closestThumbnailFromDate(beforeImage, nextImage, date);
+//            }
+//        }
     }
 
     /**
@@ -135,6 +157,45 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
         return findImageFromDate(url, date, width, height, false);
     }
 
+    /**
+     *
+     * @param url
+     * @param date
+     * @param width
+     * @param height
+     * @return
+     */
+    private Image findNextCanonicalImageFromDate(String url, Date date, int width, int height) {
+        Query query = entityManager.createQuery(
+                "SELECT i FROM " + getEntityClass().getName() + " as i "
+                + "LEFT JOIN FETCH i.url as u "
+                + "WHERE i.width = :width "
+                + "AND i.height = :height "
+                + "AND i.isCanonical = true "
+                + "AND u.url like :url "
+                + "AND i.dateOfCreation >= :date "
+                + "ORDER BY i.dateOfCreation ASC");
+        query.setParameter("width", width);
+        query.setParameter("height", height);
+        query.setParameter("url", url);
+        query.setParameter("date", date);
+        query.setMaxResults(1);
+        try {
+            return (Image) query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @param url
+     * @param date
+     * @param width
+     * @param height
+     * @param previous
+     * @return
+     */
     private Image findImageFromDate(String url, Date date, int width, int height, boolean previous) {
         StringBuilder strb = new StringBuilder();
 
@@ -145,11 +206,12 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
         strb.append("WHERE u.url like :url ");
         strb.append("AND i.width = :width ");
         strb.append("AND i.height = :height ");
+        strb.append("AND i.isCanonical = false ");
         strb.append("AND i.dateOfCreation ");
         if (previous) {
             strb.append("<");
         } else {
-            strb.append(">");
+            strb.append(">=");
         }
         strb.append(" :date ");
         strb.append("ORDER BY i.dateOfCreation ");
