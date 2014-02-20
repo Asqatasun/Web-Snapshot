@@ -23,9 +23,13 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import org.opens.websnapshot.entity.Image;
 import org.opens.websnapshot.entity.Image.Status;
+import org.opens.websnapshot.entity.ImageImpl;
+import org.opens.websnapshot.entity.UrlImpl;
 import org.opens.websnapshot.entity.service.ImageDataService;
 import org.opens.websnapshot.imageconverter.utils.ConvertImage;
 import org.opens.websnapshot.urlmanager.utils.UrlUtils;
@@ -50,26 +54,34 @@ public class IndexController {
     @Autowired
     private ImageDataService imageDataService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public HttpEntity<?> getThumbnail(
             @RequestParam(value = "url", required = true) String url,
             @RequestParam(value = "width", required = true) String width,
             @RequestParam(value = "height", required = true) String height,
             @RequestParam(value = "date", required = false) String date,
-            @RequestParam(value = "status", required = false) boolean status) throws IOException {
+            @RequestParam(value = "status", required = false) boolean status,
+            HttpServletRequest request) throws IOException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
 
-        String requestStatus = getRequestStatus(url, width, height, date);
+        String requestStatus = getRequestStatus(url, width, height, date, request);
         // if the parameters are not valid, we return an auto-generated image
         // with a text that handles the error type
         if (!requestStatus.equalsIgnoreCase(SUCCESS_HTTP_REQUEST)) {
-            return createErrorMessage(requestStatus, headers, Integer.valueOf(width), Integer.valueOf(height));
+            if (request.getMethod().equals("GET")) {
+                return createErrorMessage(requestStatus, headers, Integer.valueOf(width), Integer.valueOf(height));
+            } else {
+                return new HttpEntity<String>(requestStatus);
+            }
         }
 
-
+        if (request.getMethod().equals("POST")) {
+            Image image = imageDataService.forceImageCreation(url);
+            return new HttpEntity<Status>(image.getStatus());
+        }
 
         // regarding the presence of the date parameter, we retrieve the closest
         // thumbnail or the latest
@@ -126,6 +138,9 @@ public class IndexController {
      * @throws IOException
      */
     private HttpEntity<?> testImageAndReturnedIt(Image image, HttpHeaders headers, int width, int height, boolean status) throws IOException {
+        if (image == null && status) {
+            return new HttpEntity<String>("ERROR");
+        }
         if (image == null) {
             return createErrorMessage("error creating thumbnail", headers, width, height);
         }
@@ -140,7 +155,7 @@ public class IndexController {
         }
     }
 
-    private String getRequestStatus(String url, String width, String height, String date) {
+    private String getRequestStatus(String url, String width, String height, String date, HttpServletRequest request) {
         if (!isInteger(width) || !isInteger(height)) {
             return "invalid parameters format";
         }

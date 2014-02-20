@@ -115,4 +115,14 @@
            status = "1"
            id_url="2"
     />
+    
+    <image id="12"
+           date_of_creation="2013-10-29 17:13:47"
+           width="1024"
+           height="768"
+           is_canonical = "true"
+           status = "1"
+           id_url="2"
+    />
+    
 </dataset>

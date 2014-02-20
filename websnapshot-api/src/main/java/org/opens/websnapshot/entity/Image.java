@@ -30,7 +30,8 @@ public interface Image extends Entity {
         IN_PROGRESS("IN_PROGRESS"),
         ERROR("ERROR"),
         QUEUED("QUEUED"),
-        HACK_CREATED("HACK_CREATED");
+        HACK_CREATED("HACK_CREATED"),
+        MUST_BE_CREATE("MUST_BE_CREATE");
 
         private final String text;
         /**

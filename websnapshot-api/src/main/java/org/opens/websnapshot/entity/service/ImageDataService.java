@@ -22,6 +22,7 @@ package org.opens.websnapshot.entity.service;
 import java.util.Date;
 import org.opens.tanaguru.sdk.entity.service.GenericDataService;
 import org.opens.websnapshot.entity.Image;
+import org.opens.websnapshot.service.SnapshotCreationResponse;
 
 /**
  *
@@ -29,6 +30,13 @@ import org.opens.websnapshot.entity.Image;
  */
 public interface ImageDataService extends GenericDataService<Image, Long> {
 
+    /**
+     * 
+     * @param url
+     * @return 
+     */
+     Image forceImageCreation(String url);
+    
     /**
      *
      * @param width
@@ -47,4 +55,14 @@ public interface ImageDataService extends GenericDataService<Image, Long> {
      * @return
      */
     Image getImageFromWidthAndHeightAndUrlAndDate(int width, int height, String url, Date date);
+    
+    /**
+     * 
+     * @param canonicalImage
+     * @param url
+     * @param width
+     * @param height
+     * @return 
+     */
+    Image createCanonicalImage(Image canonicalImage, String url, int width, int height);
 }
