@@ -23,6 +23,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `url`
+--
+
+CREATE TABLE IF NOT EXISTS `url` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `image`
 --
 
@@ -35,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `image` (
   `raw_data` longblob,
   `is_canonical` bit(1) DEFAULT b'1',
   `status` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
   INDEX `index_image` (`id_url` ASC) ,
   CONSTRAINT `fk_image_url`
     FOREIGN KEY (`id_url` )
@@ -44,17 +57,6 @@ CREATE TABLE IF NOT EXISTS `image` (
     ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `url`
---
-
-CREATE TABLE IF NOT EXISTS `url` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
