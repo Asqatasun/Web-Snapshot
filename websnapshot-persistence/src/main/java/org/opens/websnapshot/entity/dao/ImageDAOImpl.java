@@ -70,79 +70,20 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
     }
 
     @Override
-    public Image findImageFromDateAndUrlAndWidthAndHeight(String url, Date date, int width, int height) {
-        /* 
-         * JPQL ne permettant pas de recuperer la date la plus proche de la date voulu,
-         * nous effectuons deux requetes :
-         * - La premiere recupere la thumbnail la plus proche precedant la date passée en parametre
-         * - La seconde recupere la thumbnail la plus proche suivant la date passée en parametre
-         * La date la plus proche est ensuite determinée coté objet.
-         */
-        return checkValidImageAndReturnTheClotest(url, date, width, height);
-    }
-
-    /**
-     *
-     * @param url
-     * @param date
-     * @param width
-     * @param height
-     * @return null si les requetes n'aboutissent a aucun resultat, la thumbnail
-     * la thumbnail plus recente s'il n'y a pas de thumbnail ancienne, la
-     * thumbnail plus ancienne s'il n'y a pas de thumbnail recente, la thumbnail
-     * la plus proche de la date passée en parametre si chaque requetes ont
-     * retourné une thumbnail.
-     */
-    private Image checkValidImageAndReturnTheClotest(String url, Date date, int width, int height) {
-//        Image beforeImage = findBeforeImageFromDate(url, date, width, height);
+    public Object findImageFromDateAndUrlAndWidthAndHeight(String url, Date date, int width, int height) {
         Image nextImage = findNextImageFromDate(url, date, width, height);
-
-        /// TODO
 
         if (nextImage == null) {
             Image snapshot = findNextCanonicalImageFromDate(url, date, width, height);
             if (snapshot == null) {
-                Image errorImage = new ImageImpl();
-                errorImage.setStatus(Status.ERROR);
-                return errorImage;
+                return Status.NOT_EXIST;
             }
-            if (snapshot.getStatus() == Status.IN_PROGRESS) {
-                snapshot.setStatus(Status.IN_PROGRESS);
+            if (snapshot.getStatus().equals(Status.IN_PROGRESS)) {
                 return snapshot;
             }
-            Image newImage = new ImageImpl();
-            newImage.setStatus(Status.MUST_BE_CREATE);
-            return newImage;
+            return Status.MUST_BE_CREATE;
         }
         return nextImage;
-
-//        Image nextImage = findCanonicalFromDate(url, date, width, height);
-
-//        if (beforeImage == null) {
-//            if (nextImage == null) {
-//                return null;
-//            } else {
-//                return nextImage;
-//            }
-//        } else {
-//            if (nextImage == null) {
-//                return beforeImage;
-//            } else {
-//                return closestThumbnailFromDate(beforeImage, nextImage, date);
-//            }
-//        }
-    }
-
-    /**
-     * @see findImageFromDateAndUrlAndWidthAndHeight
-     * @param url
-     * @param date
-     * @param width
-     * @param height
-     * @return la thumbnail la plus proche précèdent la date passée en paramètre
-     */
-    private Image findBeforeImageFromDate(String url, Date date, int width, int height) {
-        return findImageFromDate(url, date, width, height, true);
     }
 
     /**
@@ -172,8 +113,8 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
                 + "WHERE i.width = :width "
                 + "AND i.height = :height "
                 + "AND i.isCanonical = true "
-                + "AND u.url like :url "
                 + "AND i.dateOfCreation >= :date "
+                + "AND u.url like :url "
                 + "ORDER BY i.dateOfCreation ASC");
         query.setParameter("width", width);
         query.setParameter("height", height);
@@ -207,19 +148,8 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
         strb.append("AND i.width = :width ");
         strb.append("AND i.height = :height ");
         strb.append("AND i.isCanonical = false ");
-        strb.append("AND i.dateOfCreation ");
-        if (previous) {
-            strb.append("<");
-        } else {
-            strb.append(">=");
-        }
-        strb.append(" :date ");
-        strb.append("ORDER BY i.dateOfCreation ");
-        if (previous) {
-            strb.append("DESC");
-        } else {
-            strb.append("ASC");
-        }
+        strb.append("AND i.dateOfCreation >= :date ");
+        strb.append("ORDER BY i.dateOfCreation ASC");
 
         Query query = entityManager.createQuery(strb.toString());
         query.setParameter("width", width);
@@ -232,22 +162,6 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
         } catch (NoResultException nre) {
             return null;
         }
-    }
-
-    /**
-     *
-     * @param beforeImage
-     * @param nextImage
-     * @param targetDate
-     * @return the closest Thumbnail from the targetDate
-     */
-    private Image closestThumbnailFromDate(Image beforeImage, Image nextImage, Date targetDate) {
-        Long beforeDate = beforeImage.getDateOfCreation().getTime();
-        Long nextDate = nextImage.getDateOfCreation().getTime();
-        Long diffBeforeDateAndTargetDate = targetDate.getTime() - beforeDate;
-        Long diffNextDateAndTargetDate = nextDate - targetDate.getTime();
-
-        return diffBeforeDateAndTargetDate > diffNextDateAndTargetDate ? nextImage : beforeImage;
     }
 
     @Override

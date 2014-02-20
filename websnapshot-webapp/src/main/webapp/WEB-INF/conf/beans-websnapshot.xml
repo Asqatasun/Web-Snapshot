@@ -64,19 +64,4 @@
           p:waitForTasksToCompleteOnShutdown="false"
           p:maxPoolSize="50"
           p:allowCoreThreadTimeOut="false" />
-    
-    <bean id="serviceCallAbuse" class="org.opens.websnapshot.service.security.ServiceCallAbuse">
-        <property name="emails" value="${service.abuse.email.list}"/>
-        <property name="maxNumberOfRequestByInterval" value="1"/>
-        <!-- default value <property name="interval" value="60000"/> -->
-    </bean>
-
-    <aop:config>
-        <aop:aspect ref="serviceCallAbuse">
-            <aop:pointcut id="servicePointcut" expression="execution(* org.opens.websnapshot.entity.service.ImageDataServiceImpl.createCanonicalImage*(..)) || execution(* org.opens.websnapshot.entity.service.ImageDataServiceImpl.createNotCanonicalImage*(..))" />
-            <aop:before method="imageCreationEntry" pointcut-ref="servicePointcut"/>
-            <aop:after-returning method="imageCreationExit" returning="result" pointcut-ref="servicePointcut"/>
-        </aop:aspect>
-    </aop:config>
-
 </beans>

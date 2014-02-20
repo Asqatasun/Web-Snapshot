@@ -22,7 +22,6 @@ package org.opens.websnapshot.entity.dao;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.logging.Logger;
 import static junit.framework.Assert.assertEquals;
 import org.opens.websnapshot.entity.Image;
 import org.opens.websnapshot.entity.ImageImpl;
@@ -123,25 +122,29 @@ public class ImageDAOImplTest extends AbstractDaoTestCase {
         Calendar cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 15, 23, 59, 0);
         Date date = cl.getTime();
-        Image returnedImage = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
+        Object object = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
+        Image returnedImage = (Image) object;
         assertEquals(Long.valueOf(9), returnedImage.getId());
 
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 16, 00, 01, 30);
         date = cl.getTime();
-        returnedImage = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
+        object = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
+        returnedImage = (Image) object;
         assertEquals(Long.valueOf(12), returnedImage.getId());
 
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 16, 00, 00, 0);
         date = cl.getTime();
-        returnedImage = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
+        object = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
+        returnedImage = (Image) object;
         assertEquals(Long.valueOf(11), returnedImage.getId());
 
         cl = Calendar.getInstance();
         cl.set(2013, Calendar.AUGUST, 15, 23, 59, 59);
         date = cl.getTime();
-        returnedImage = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
+        object = instance.findImageFromDateAndUrlAndWidthAndHeight("www.epitech.eu", date, 1024, 768);
+        returnedImage = (Image) object;
         assertEquals(Long.valueOf(11), returnedImage.getId());
     }
 }

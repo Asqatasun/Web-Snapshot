@@ -23,13 +23,10 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.opens.websnapshot.entity.Image;
 import org.opens.websnapshot.entity.Image.Status;
-import org.opens.websnapshot.entity.ImageImpl;
-import org.opens.websnapshot.entity.UrlImpl;
 import org.opens.websnapshot.entity.service.ImageDataService;
 import org.opens.websnapshot.imageconverter.utils.ConvertImage;
 import org.opens.websnapshot.urlmanager.utils.UrlUtils;
@@ -139,10 +136,10 @@ public class IndexController {
      */
     private HttpEntity<?> testImageAndReturnedIt(Image image, HttpHeaders headers, int width, int height, boolean status) throws IOException {
         if (image == null && status) {
-            return new HttpEntity<String>("ERROR");
+            return new HttpEntity<String>("NOT_EXIST");
         }
         if (image == null) {
-            return createErrorMessage("error creating thumbnail", headers, width, height);
+            return createErrorMessage("NOT_EXIST", headers, width, height);
         }
         if (status) {
             JsonImage jsonImage = new JsonImage(image);

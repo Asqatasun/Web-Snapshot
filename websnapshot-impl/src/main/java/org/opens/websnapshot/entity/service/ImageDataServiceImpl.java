@@ -109,19 +109,33 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
 
     @Override
     public Image getImageFromWidthAndHeightAndUrlAndDate(int width, int height, String url, Date date) {
-        Image image = ((ImageDAO) entityDao).findImageFromDateAndUrlAndWidthAndHeight(url, date, width, height);
-        if (image.getStatus().equals(Status.CREATED) || image.getStatus().equals(Status.IN_PROGRESS)) {
-            return image;
-        } else if (image.getStatus() == Status.ERROR) {
-            return null;
-        } else {
-            LOGGER.debug("The requested image with width: " + width
-                    + " height: " + height
-                    + " url: " + url
-                    + " date: " + date.toString()
-                    + " hasn't been found and has to created");
-            return getImage(url, width, height);
+        Object object = ((ImageDAO) entityDao).findImageFromDateAndUrlAndWidthAndHeight(url, date, width, height);
+        try {
+            Image image = (Image) object;
+            if (image.getStatus().equals(Status.CREATED) || image.getStatus().equals(Status.IN_PROGRESS)) {
+                return image;
+            }
+        } catch (Exception ex) {
+            LOGGER.debug("Impossible to cast object returning from findImageFromDateAndUrlAndWidthAndHeight to Image");
+            try {
+                Status status = (Status) object;
+                if (status.equals(Status.MUST_BE_CREATE)) {
+                    return getImage(url, width, height);
+                } else if (status.equals(Status.NOT_EXIST)) {
+                    return null;
+                } else {
+                    LOGGER.debug("The requested image with width: " + width
+                            + " height: " + height
+                            + " url: " + url
+                            + " date: " + date.toString()
+                            + " hasn't been found and we returned null");
+                    return null;
+                }
+            } catch (Exception ex1) {
+                LOGGER.debug("Impossible to cast object returning from findImageFromDateAndUrlAndWidthAndHeight to Status");
+            }
         }
+        return null;
     }
 
     /**
