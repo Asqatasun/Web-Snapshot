@@ -67,7 +67,7 @@ public class IndexController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
 
-        String requestStatus = getRequestStatus(url, width, height, date, request);
+        String requestStatus = getRequestStatus(url, width, height, date);
         // if the parameters are not valid, we return an auto-generated image
         // with a text that handles the error type
         if (!requestStatus.equalsIgnoreCase(SUCCESS_HTTP_REQUEST)) {
@@ -155,7 +155,7 @@ public class IndexController {
         }
     }
 
-    private String getRequestStatus(String url, String width, String height, String date, HttpServletRequest request) {
+    private String getRequestStatus(String url, String width, String height, String date) {
         if (!isInteger(width) || !isInteger(height)) {
             return "invalid parameters format";
         }
