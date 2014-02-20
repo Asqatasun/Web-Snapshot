@@ -56,15 +56,15 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
     @Override
     public Image findImageByWidthAndHeightAndUrl(int width, int height, String url) {
         Query query = entityManager.createQuery(
-                "SELECT i FROM " + getEntityClass().getName() + " as i "
+                "SELECT i from " + getEntityClass().getName() + " as i "
                 + "LEFT JOIN FETCH i.url as u "
                 + "WHERE i.width = :width "
                 + "AND i.height = :height "
-                + "AND u.url like :url "
+                + "AND u.url like :URL "
                 + "ORDER BY i.dateOfCreation DESC");
         query.setParameter("width", width);
         query.setParameter("height", height);
-        query.setParameter("url", url);
+        query.setParameter("URL", url);
         query.setMaxResults(1);
         return (Image) query.getSingleResult();
     }
@@ -95,26 +95,14 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
      * @return la thumbnail la plus proche suivant la date passée en paramètre
      */
     private Image findNextImageFromDate(String url, Date date, int width, int height) {
-        return findImageFromDate(url, date, width, height, false);
-    }
-
-    /**
-     *
-     * @param url
-     * @param date
-     * @param width
-     * @param height
-     * @return
-     */
-    private Image findNextCanonicalImageFromDate(String url, Date date, int width, int height) {
         Query query = entityManager.createQuery(
-                "SELECT i FROM " + getEntityClass().getName() + " as i "
+                "SELECT i FROM " + getEntityClass().getName() + " AS i "
                 + "LEFT JOIN FETCH i.url as u "
-                + "WHERE i.width = :width "
+                + "WHERE u.url like :url "
+                + "AND i.width = :width "
                 + "AND i.height = :height "
-                + "AND i.isCanonical = true "
+                + "AND i.isCanonical = false "
                 + "AND i.dateOfCreation >= :date "
-                + "AND u.url like :url "
                 + "ORDER BY i.dateOfCreation ASC");
         query.setParameter("width", width);
         query.setParameter("height", height);
@@ -134,27 +122,21 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
      * @param date
      * @param width
      * @param height
-     * @param previous
      * @return
      */
-    private Image findImageFromDate(String url, Date date, int width, int height, boolean previous) {
-        StringBuilder strb = new StringBuilder();
-
-        strb.append("SELECT i FROM ");
-        strb.append(getEntityClass().getName());
-        strb.append(" AS i ");
-        strb.append("LEFT JOIN FETCH i.url u ");
-        strb.append("WHERE u.url like :url ");
-        strb.append("AND i.width = :width ");
-        strb.append("AND i.height = :height ");
-        strb.append("AND i.isCanonical = false ");
-        strb.append("AND i.dateOfCreation >= :date ");
-        strb.append("ORDER BY i.dateOfCreation ASC");
-
-        Query query = entityManager.createQuery(strb.toString());
+    private Image findNextCanonicalImageFromDate(String url, Date date, int width, int height) {
+        Query query = entityManager.createQuery(
+                "SELECT i from " + getEntityClass().getName() + " as i "
+                + "LEFT JOIN FETCH i.url as u "
+                + "WHERE i.width = :width "
+                + "AND i.height = :height "
+                + "AND i.isCanonical = true "
+                + "AND i.dateOfCreation >= :date "
+                + "AND u.url like :URL "
+                + "ORDER BY i.dateOfCreation ASC");
         query.setParameter("width", width);
         query.setParameter("height", height);
-        query.setParameter("url", url);
+        query.setParameter("URL", url);
         query.setParameter("date", date);
         query.setMaxResults(1);
         try {
