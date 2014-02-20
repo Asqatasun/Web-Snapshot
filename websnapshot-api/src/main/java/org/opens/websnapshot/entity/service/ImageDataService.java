@@ -22,7 +22,6 @@ package org.opens.websnapshot.entity.service;
 import java.util.Date;
 import org.opens.tanaguru.sdk.entity.service.GenericDataService;
 import org.opens.websnapshot.entity.Image;
-import org.opens.websnapshot.service.SnapshotCreationResponse;
 
 /**
  *
