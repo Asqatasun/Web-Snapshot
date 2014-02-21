@@ -33,7 +33,7 @@
         <property name="threadPoolTaskExecutor">
             <ref bean="threadPoolTaskExecutor"/>
         </property>
-            
+        <property name="lifetime" value="${service.snapshot-lifetime}"/>
     </bean>
 
 

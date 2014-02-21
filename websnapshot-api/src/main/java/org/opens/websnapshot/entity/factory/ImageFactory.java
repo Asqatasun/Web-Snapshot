@@ -27,4 +27,10 @@ import org.opens.websnapshot.entity.Image;
  * @author alingua
  */
 public interface ImageFactory extends GenericFactory<Image> {
+    
+    /**
+     * 
+     * @return 
+     */
+    Image createNotCreatedImage();
 }

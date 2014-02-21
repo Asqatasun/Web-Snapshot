@@ -20,11 +20,15 @@
 package org.opens.websnapshot.webapp.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 import org.opens.websnapshot.entity.Image;
 import org.opens.websnapshot.entity.Image.Status;
 import org.opens.websnapshot.entity.service.ImageDataService;
@@ -63,8 +67,15 @@ public class IndexController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
+        String asciiUrl = null;
 
-        String requestStatus = getRequestStatus(url, width, height, date);
+        try {
+            asciiUrl = new URL(url).toURI().toASCIIString();
+        } catch (URISyntaxException ex) {
+            return new HttpEntity<String>("malformed url");
+        }
+
+        String requestStatus = getRequestStatus(asciiUrl, width, height, date);
         // if the parameters are not valid, we return an auto-generated image
         // with a text that handles the error type
         if (!requestStatus.equalsIgnoreCase(SUCCESS_HTTP_REQUEST)) {
@@ -76,7 +87,7 @@ public class IndexController {
         }
 
         if (request.getMethod().equals("POST")) {
-            Image image = imageDataService.forceImageCreation(url);
+            Image image = imageDataService.forceImageCreation(asciiUrl, Integer.valueOf(width), Integer.valueOf(height));
             return new HttpEntity<Status>(image.getStatus());
         }
 
@@ -87,14 +98,15 @@ public class IndexController {
             Image image = imageDataService.getImageFromWidthAndHeightAndUrlAndDate(
                     Integer.valueOf(width),
                     Integer.valueOf(height),
-                    url,
+                    asciiUrl,
                     convertDate);
             return testImageAndReturnedIt(image, headers, Integer.valueOf(width), Integer.valueOf(height), status);
         } else {
             Image image = imageDataService.getImageFromWidthAndHeightAndUrl(
                     Integer.valueOf(width),
                     Integer.valueOf(height),
-                    url);
+                    asciiUrl,
+                    status);
             return testImageAndReturnedIt(image, headers, Integer.valueOf(width), Integer.valueOf(height), status);
         }
     }
@@ -136,7 +148,8 @@ public class IndexController {
      */
     private HttpEntity<?> testImageAndReturnedIt(Image image, HttpHeaders headers, int width, int height, boolean status) throws IOException {
         if (image == null && status) {
-            return new HttpEntity<String>("NOT_EXIST");
+            JsonImage jsonImage = new JsonImage(imageDataService.getNotCreatedImage(width, height));
+            return new HttpEntity<JsonImage>(jsonImage);
         }
         if (image == null) {
             return createErrorMessage("NOT_EXIST", headers, width, height);
@@ -155,9 +168,6 @@ public class IndexController {
     private String getRequestStatus(String url, String width, String height, String date) {
         if (!isInteger(width) || !isInteger(height)) {
             return "invalid parameters format";
-        }
-        if (!UrlUtils.checkIfURLIsValid(url)) {
-            return "malformed url";
         }
         if (date != null && !isLong(date) && convertStringDateToDate(date) == null) {
             return "invalid date format";
