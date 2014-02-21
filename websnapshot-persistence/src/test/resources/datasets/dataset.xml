@@ -17,6 +17,10 @@
     <url id="4"
          url="www.tanaguru.com"
     />
+
+    <url id="5"
+         url="www.google.ca"
+    />
     
     <image id="1"
            date_of_creation="2013-10-29 17:12:44"
@@ -25,6 +29,15 @@
            is_canonical = "true"
            status = "1"
            id_url="1"
+    />
+
+    <image id="13"
+           date_of_creation="2013-10-29 17:12:44"
+           width="1024"
+           height="768"
+           is_canonical = "true"
+           status = "1"
+           id_url="5"
     />
 
     <image id="3"

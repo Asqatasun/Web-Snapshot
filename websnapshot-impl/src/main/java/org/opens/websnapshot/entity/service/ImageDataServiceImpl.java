@@ -225,6 +225,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
             canonicalImage.setHeight(response.getHeight());
             canonicalImage.setRawData(response.getRawImage());
             canonicalImage.setStatus(Status.CREATED);
+            canonicalImage.setUrl(getUrlDataService().getUrlFromStringUrl(url));
             return saveOrUpdate(canonicalImage);
         } else {
             delete(canonicalImage.getId());

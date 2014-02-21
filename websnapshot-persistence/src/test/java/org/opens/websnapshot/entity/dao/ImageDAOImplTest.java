@@ -68,14 +68,14 @@ public class ImageDAOImplTest extends AbstractDaoTestCase {
         /* set-up instance */
         ImageDAO instance = getBean();
         Collection<Image> images = instance.findAll();
-        assertEquals(12, images.size());
+        assertEquals(13, images.size());
 
         Image image = new ImageImpl();
         /* run test */
         instance.create(image);
 
         images = instance.findAll();
-        assertEquals(13, images.size());
+        assertEquals(14, images.size());
     }
 
     /**
