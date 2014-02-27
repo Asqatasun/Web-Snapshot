@@ -34,7 +34,7 @@ public class SnapshotCreatorImplTest extends TestCase {
     public void testGetThumbnail() {
         System.out.println("getThumbnail");
         SnapshotCreator instance = new SnapshotCreatorImpl();
-        String csvFileToRead = "/home/alingua/Documents/Sources/Web-snapshot/websnapshot-webapp/src/test/resources/LIST-online-all-sites.txt";
+        String csvFileToRead = "src/test/resources/LIST-online-all-sites.txt";
         BufferedReader br = null;
         String line = "";
         String[] url = null;
