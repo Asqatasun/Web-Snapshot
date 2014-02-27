@@ -58,3 +58,10 @@ You should use [this](https://github.com/Tanaguru/Web-snapshot/blob/master/websn
     touch phantomjsdriver.log
     ln -s phantomjsdriver.log /var/lib/tomcat6/phantomjsdriver.log
     chown tomcat6 phantomjsdriver.log
+
+### Build the sources
+
+    cd Web-Snapshot
+    mvn clean install
+    sudo cp websnapshot-webapp/target/websnapshot-webapp-1.0-SNAPSHOT.war /var/lib/tomcat6/webapps/
+    sudo invoke-rc.d tomcat6 restart
