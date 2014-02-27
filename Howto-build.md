@@ -7,9 +7,10 @@ Tested on Linux Ubuntu 12.04 LTS
 
 ## Howto actually build
     git clone https://github.com/Tanaguru/Web-snapshot.git
-    cd Contrast-finder
+    cd Web-Snapshot
     mvn clean install
-    sudo cp color-finder-webapp/target/contrast-finder-webapp-1.0-SNAPSHOT.war /var/lib/tomcat6/webapps/
-    sudo mkdir /var/log/contrast-finder/
-    sudo chown -R tomcat6 contrast-finder/
+    sudo cp websnapshot-webapp/target/websnapshot-webapp-1.0-SNAPSHOT.war /var/lib/tomcat6/webapps/
+    sudo mkdir /var/log/websnapshot/
+    sudo touch /var/log/websnapshot/websnapshot.log
+    sudo chown -R tomcat6 websnapshot/
     sudo invoke-rc.d tomcat6 restart
