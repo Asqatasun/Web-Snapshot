@@ -7,5 +7,3 @@ Welcome to the Web-snapshot wiki!
 ## Howto use
 
 [[Howto use]]
-
-## Other tools
