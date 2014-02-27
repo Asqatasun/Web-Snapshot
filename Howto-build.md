@@ -10,6 +10,7 @@ Tested on Linux Ubuntu 12.04 LTS
     sudo mkdir /var/log/websnapshot/
     sudo touch /var/log/websnapshot/websnapshot.log
     sudo chown -R tomcat6 websnapshot/
+    cd /home/<user>
     git clone https://github.com/Tanaguru/Web-snapshot.git
     cd Web-Snapshot
     mvn clean install
