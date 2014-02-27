@@ -1,21 +1,60 @@
 Tested on Linux Ubuntu 12.04 LTS
 
 ## Prerequesites
-* Tomcat
 * Maven
 * Git
+* Tomcat
+```
+    sudo aptitude install tomcat6 libspring-instrument-java
+    sudo ln -s /usr/share/java/spring3-instrument-tomcat.jar /usr/share/tomcat6/lib/spring3-instrument-tomcat.jar
+    sudo ln -s /usr/share/java/mysql-connector-java.jar /usr/share/tomcat6/lib/mysql-connector-java.jar
+```
 * MySQL
-* libmysql-java
 
-On Ubuntu, use this [JDBCAndMySQL](https://help.ubuntu.com/community/JDBCAndMySQL) wiki installation.
+Installation : 
+<code>sudo aptitude install mysql-server-5.5 libmysql-java</code>
 
-## Howto actually build
-    sudo cp websnapshot-webapp/target/websnapshot-webapp-1.0-SNAPSHOT.war /var/lib/tomcat6/webapps/
-    sudo mkdir /var/log/websnapshot/
-    sudo touch /var/log/websnapshot/websnapshot.log
-    sudo chown -R tomcat6 websnapshot/
+Configuration :
+
+Edit the my.cnf mysql configuration file.
+```
+sudo vi /etc/mysql/my.cnf
+```
+Set the max_allowed_packet option to 16M (default is 1M)
+```
+max_allowed_packet      = 16M
+```
+Restart mysql service
+```
+sudo service mysql restart
+```
+
+## Howto build
+
+### Create the configuration file
+    sudo touch /etc/websnapshot.conf
+You can use [this](https://github.com/Tanaguru/Web-snapshot/blob/master/websnapshot-resources/src/main/resources/conf/web-thumbnail.conf) configuration file and replace the variable.
+
+### Create the database
+You should use [this](https://github.com/Tanaguru/Web-snapshot/blob/master/websnapshot-resources/src/main/resources/sql/webthumbnail.sql) file and execute the request in your MySQL installation.
+
+### Clone the project from Github repository
+    
     cd /home/<user>
     git clone https://github.com/Tanaguru/Web-snapshot.git
     cd Web-Snapshot
     mvn clean install
+    sudo cp websnapshot-webapp/target/websnapshot-webapp-1.0-SNAPSHOT.war /var/lib/tomcat6/webapps/
     sudo invoke-rc.d tomcat6 restart
+
+### Create the log files
+
+    sudo mkdir /var/log/websnapshot/
+    sudo touch /var/log/websnapshot/websnapshot.log
+    sudo chown -R tomcat6 websnapshot/
+    cd /var/tmp
+    mkdir websnapshot
+    cd websnapshot
+    touch phantomjsdriver.log
+    ln -s phantomjsdriver.log /var/lib/tomcat6/phantomjsdriver.log
+    chown tomcat6 phantomjsdriver.log
