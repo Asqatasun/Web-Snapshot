@@ -4,6 +4,10 @@ Tested on Linux Ubuntu 12.04 LTS
 * Tomcat
 * Maven
 * Git
+* MySQL
+* libmysql-java
+
+On Ubuntu, use this [JDBCAndMySQL](https://help.ubuntu.com/community/JDBCAndMySQL) wiki installation.
 
 ## Howto actually build
     sudo cp websnapshot-webapp/target/websnapshot-webapp-1.0-SNAPSHOT.war /var/lib/tomcat6/webapps/
