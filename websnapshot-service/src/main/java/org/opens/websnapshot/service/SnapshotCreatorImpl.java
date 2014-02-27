@@ -81,6 +81,7 @@ public class SnapshotCreatorImpl implements SnapshotCreator {
         RemoteWebDriver driver = getWebDriver(windowWidth, windowHeight, webDriver);
         String status = loadPage(driver, url);
         if (!status.equals(SnapshotCreationResponse.SUCCESS)) {
+            closeDriver(driver);
             return new SnapshotCreationResponseImpl(null, status);
         }
         try {
@@ -137,6 +138,7 @@ public class SnapshotCreatorImpl implements SnapshotCreator {
      * @param driver
      */
     private void closeDriver(RemoteWebDriver driver) {
+        driver.close();
         driver.quit();
     }
 
