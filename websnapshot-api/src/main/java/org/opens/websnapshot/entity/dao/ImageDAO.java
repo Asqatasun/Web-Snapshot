@@ -27,7 +27,7 @@ public interface ImageDAO extends GenericDAO<Image, Long> {
 
     Image findImageByWidthAndHeightAndUrl(int width, int height, String url);
 
-    Image findImageFromDateAndUrlAndWidthAndHeight(String url, Date date, int width, int height);
+    Object findImageFromDateAndUrlAndWidthAndHeight(String url, Date date, int width, int height);
 
     Image findCanonicalImageByUrl(String url);
 

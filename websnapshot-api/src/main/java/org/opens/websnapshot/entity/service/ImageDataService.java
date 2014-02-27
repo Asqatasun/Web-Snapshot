@@ -30,13 +30,30 @@ import org.opens.websnapshot.entity.Image;
 public interface ImageDataService extends GenericDataService<Image, Long> {
 
     /**
+     * 
+     * @param url
+     * @param width
+     * @param height
+     * @return 
+     */
+     Image forceImageCreation(String url, int width, int height);
+    
+     /**
+      * 
+      * @param width
+      * @param height
+      * @return 
+      */
+     Image getNotCreatedImage(int width, int height);
+     
+    /**
      *
      * @param width
      * @param height
      * @param url
      * @return
      */
-    Image getImageFromWidthAndHeightAndUrl(int width, int height, String url);
+    Image getImageFromWidthAndHeightAndUrl(int width, int height, String url, boolean status);
 
     /**
      *
@@ -47,4 +64,34 @@ public interface ImageDataService extends GenericDataService<Image, Long> {
      * @return
      */
     Image getImageFromWidthAndHeightAndUrlAndDate(int width, int height, String url, Date date);
+    
+    /**
+     * 
+     * @param width
+     * @param height
+     * @param url
+     * @param canonicalImage
+     * @return 
+     */
+    Image createCanonicalAndNoCanonicalImage(int width, int height, String url, Image canonicalImage, Image notCanonicalImage);
+    
+    /**
+     * 
+     * @param canonicalImage
+     * @param url
+     * @param width
+     * @param height
+     * @return 
+     */
+    Image createCanonicalImage(Image canonicalImage, String url, int width, int height);
+    
+    /**
+     * 
+     * @param canonicalImage
+     * @param width
+     * @param height
+     * @param url
+     * @return 
+     */
+    Image createNotCanonicalImage(Image canonicalImage, int width, int height, String url, Image notCanonicalImage);
 }

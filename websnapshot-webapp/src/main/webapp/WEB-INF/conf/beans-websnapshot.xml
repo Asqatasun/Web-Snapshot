@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
     <!-- DAO -->
     
@@ -26,7 +30,12 @@
         <property name="entityFactory">
             <ref bean="imageFactory"/>
         </property>
+        <property name="threadPoolTaskExecutor">
+            <ref bean="threadPoolTaskExecutor"/>
+        </property>
+        <property name="lifetime" value="${service.snapshot-lifetime}"/>
     </bean>
+
 
     <bean id="urlDataService" class="org.opens.websnapshot.entity.service.UrlDataServiceImpl">
         <property name="entityDao">
@@ -49,4 +58,10 @@
         <property name="webDriver" value="phantomJS"/>
     </bean>
 
+    <bean id="threadPoolTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"
+          p:corePoolSize="10"
+          p:daemon="false"
+          p:waitForTasksToCompleteOnShutdown="false"
+          p:maxPoolSize="50"
+          p:allowCoreThreadTimeOut="false" />
 </beans>

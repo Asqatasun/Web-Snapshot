@@ -36,21 +36,21 @@ public class SnapshotCreationResponseImpl implements SnapshotCreationResponse {
     /**
      * Default constructor
      * @param image
-     * @param status 
+     * @param status
      */
     public SnapshotCreationResponseImpl(
-            BufferedImage image, 
+            BufferedImage image,
             String status) {
         this.status = status;
         this.image = image;
     }
-    
+
     @Override
     public int getWidth() {
         return image.getWidth();
     }
 
-     @Override
+    @Override
     public int getHeight() {
         return image.getHeight();
     }

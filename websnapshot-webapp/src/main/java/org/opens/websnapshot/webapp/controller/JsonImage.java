@@ -19,7 +19,6 @@
  */
 package org.opens.websnapshot.webapp.controller;
 
-import java.util.Date;
 import org.opens.websnapshot.entity.Image;
 import org.opens.websnapshot.entity.Image.Status;
 
@@ -51,8 +50,8 @@ public class JsonImage {
         return image.getStatus();
     }
 
-    public Date getDateOfCreation() {
-        return image.getDateOfCreation();
+    public String getDateOfCreation() {
+        return image.getDateOfCreation().toString();
     }
 
     public String getUrl() {

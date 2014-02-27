@@ -21,6 +21,7 @@ package org.opens.websnapshot.entity.factory;
 
 import org.opens.websnapshot.entity.Image;
 import org.opens.websnapshot.entity.ImageImpl;
+import org.opens.websnapshot.entity.NotCreatedImageImpl;
 
 public class ImageFactoryImpl implements ImageFactory {
 
@@ -31,5 +32,10 @@ public class ImageFactoryImpl implements ImageFactory {
     @Override
     public Image create() {
         return new ImageImpl();
+    }
+    
+    @Override
+    public Image createNotCreatedImage() {
+        return new NotCreatedImageImpl();
     }
 }
