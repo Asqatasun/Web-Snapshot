@@ -1,4 +1,4 @@
-### Create snapshot and its thumbnail (With Get Request Method)
+### Create snapshot and its thumbnail (With GET Request Method)
 Open your browser.
 
 Fill the address field with :
@@ -16,3 +16,15 @@ Fill the address field with :
   * Replace [mm] by the minutes (between 0 and 59)
   * Replace [ss] by the seconds (between 0 and 59)
 * (Optional parameter) Replace [boolean] with `false` has no effect (if is not set too), just return the thumbnail. Replacing [boolean] with `true` returning a JSON with all informations about the thumbnail, and his status of creation.
+
+### Create snapshot and its thumbnail (With POST Request Method)
+
+To explain this usage, we choose to use [cURL](http://fr.wikipedia.org/wiki/CURL) software to send POST request.
+
+Open your console, and fill it with :
+
+`curl -X POST -d "url=[url]&width=[width]&height=[height]&date=[date]&status=[boolean]" http://localhost:8080/websnapshot-webapp-1.0-SNAPSHOT`
+
+This operation start the creation of the snapshot and its thumbnail, return instantly the status of creation of the thumbnail. If you send the same request, just the thumbnail will be create.
+
+The parameters have the same working that the GET request : if you set [boolean] with `true`, the request return instantly a JSON with the informations.
