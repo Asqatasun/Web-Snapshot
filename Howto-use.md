@@ -15,4 +15,4 @@ Fill the address field with :
   * Replace [HH] by the hours (between 00 and 23)
   * Replace [mm] by the minutes (between 0 and 59)
   * Replace [ss] by the seconds (between 0 and 59)
-*
+* (Optional parameter)
