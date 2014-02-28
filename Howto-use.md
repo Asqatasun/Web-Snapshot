@@ -25,6 +25,6 @@ Open your console, and fill it with :
 
 `curl -X POST -d "url=[url]&width=[width]&height=[height]&date=[date]&status=[boolean]" http://localhost:8080/websnapshot-webapp-1.0-SNAPSHOT`
 
-This operation start the creation of the snapshot and its thumbnail, return instantly the status of creation of the thumbnail. If you send the same request, just the thumbnail will be create.
+This operation start the creation of the snapshot and its thumbnail and return instantly the status of creation of the thumbnail. If you send the same request, just the thumbnail will be create.
 
 The parameters have the same working that the GET request : if you set [boolean] with `true`, the request return instantly a JSON with the informations.
