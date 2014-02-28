@@ -1,6 +1,8 @@
 Tested on Linux Ubuntu 12.04 LTS
 
 ## Prerequesites
+* Maven
+* Git
 * PhantomJs
 ```
     cd /opt
@@ -8,8 +10,6 @@ Tested on Linux Ubuntu 12.04 LTS
     sudo tar -xvf phantomjs-1.9.7-linux-x86_64.tar.bz2
     sudo rm phantomjs-1.9.7-linux-x86_64.tar.bz2
 ```
-* Maven
-* Git
 
 ## Howto build
 
