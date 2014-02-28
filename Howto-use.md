@@ -3,9 +3,8 @@ Open your browser.
 
 Fill the address field with :
 
-`http://localhost:8080/websnapshot-webapp-1.0-SNAPSHOT/?url=[url]&width=[size]&height=[size]&date=[date]&status=[boolean]`
+`http://localhost:8080/websnapshot-webapp-1.0-SNAPSHOT/?width=[size]&height=[size]&date=[date]&status=[boolean]url=[url]`
 
-* (Required Parameter) Replace [url] with the url that you want to create thumbnail.
 * (Required Parameter) Replace [width] with the width that you want.
 * (Required Parameter) Replace [height] with the height that you want.*
 * (Optional Parameter) Replace [date] with the date with format ([yyyy]-[MM]-[dd]T[HH]:[mm]:[ss]). That return the next thumbnail creating from the date.
@@ -16,6 +15,7 @@ Fill the address field with :
   * Replace [mm] by the minutes (between 0 and 59)
   * Replace [ss] by the seconds (between 0 and 59)
 * (Optional Parameter) Replace [boolean] with `false` has no effect (if is not set too), just return the thumbnail. Replacing [boolean] with `true` returning a JSON with all informations about the thumbnail, and his status of creation.
+* (Required Parameter) Replace [url] with the url that you want to create thumbnail. This parameter must be the last parameter to deal with errors cases or fragments in url (usage of `#` characters for example).
 
 ### Create snapshot and its thumbnail (With POST Request Method)
 
