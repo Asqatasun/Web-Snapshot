@@ -7,5 +7,5 @@ Fill the address field with :
 <code>http://localhost:8080/websnapshot-webapp-1.0-SNAPSHOT/?url=[url]&width=[size]&height=[size]</code>
 
 Replace [url] by the url that you want to create thumbnail.<br/>
-Replace [width] by the width that you want.
+Replace [width] by the width that you want.<br/>
 Replace [height] by the height that you want.
