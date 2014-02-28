@@ -1,6 +1,13 @@
 Tested on Linux Ubuntu 12.04 LTS
 
 ## Prerequesites
+* PhantomJs
+```
+    cd /opt
+    sudo wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
+    sudo tar -xvf phantomjs-1.9.7-linux-x86_64.tar.bz2
+    sudo rm phantomjs-1.9.7-linux-x86_64.tar.bz2
+```
 * Maven
 * Git
 * Tomcat
