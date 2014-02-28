@@ -65,8 +65,8 @@ public class IndexController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
-        String asciiUrl = null;
-
+        String asciiUrl;
+        
         try {
             asciiUrl = new URL(url).toURI().toASCIIString();
         } catch (URISyntaxException ex) {
