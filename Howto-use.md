@@ -3,7 +3,7 @@ Open your browser.
 
 Fill the address field with :
 
-<code>http://localhost:8080/websnapshot-webapp-1.0-SNAPSHOT/?url=[url]&width=[size]&height=[size]&date=[date]&status=[boolean]</code>
+`http://localhost:8080/websnapshot-webapp-1.0-SNAPSHOT/?url=[url]&width=[size]&height=[size]&date=[date]&status=[boolean]`
 
 * (Required Parameter) Replace [url] with the url that you want to create thumbnail.
 * (Required Parameter) Replace [width] with the width that you want.
@@ -15,4 +15,4 @@ Fill the address field with :
   * Replace [HH] by the hours (between 00 and 23)
   * Replace [mm] by the minutes (between 0 and 59)
   * Replace [ss] by the seconds (between 0 and 59)
-* (Optional parameter)
+* (Optional parameter) Replace [boolean] with `false` has no effect (if is not set too), just return the thumbnail. Replacing [boolean] with `true` returning a JSON with all informations about the thumbnail, and his status of creation.
