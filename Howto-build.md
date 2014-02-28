@@ -42,10 +42,6 @@ You should use [this](https://github.com/Tanaguru/Web-snapshot/blob/master/websn
     
     cd /home/<user>
     git clone https://github.com/Tanaguru/Web-snapshot.git
-    cd Web-Snapshot
-    mvn clean install
-    sudo cp websnapshot-webapp/target/websnapshot-webapp-1.0-SNAPSHOT.war /var/lib/tomcat6/webapps/
-    sudo invoke-rc.d tomcat6 restart
 
 ### Create the log files
 
