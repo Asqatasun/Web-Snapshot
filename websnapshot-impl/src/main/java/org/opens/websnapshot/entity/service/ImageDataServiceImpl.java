@@ -42,15 +42,15 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
     private static final int DEFAULT_WINDOW_WIDTH = 1024;
     private static final int DEFAULT_WINDOW_HEIGHT = 768;
     private static final Logger LOGGER = Logger.getLogger(ImageDataServiceImpl.class);
-    private static final long ONE_DAY = 86400L;
+    private static final long ONE_DAY = 86400000L;
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
     private long lifetime = 1;
     private UrlDataService urlDataService;
     private SnapshotCreator snapshotCreator;
     private Pattern notExpirableUrlPattern;
 
-    public void setNotExpirableUrlRegexp(String notExpirableUrlRegexp) {
-        notExpirableUrlPattern = Pattern.compile(notExpirableUrlRegexp);
+    public void setNotExpirableUrlPattern(String notExpirableUrlPattern) {
+        this.notExpirableUrlPattern = Pattern.compile(notExpirableUrlPattern);
     }
 
     public SnapshotCreator getSnapshotCreator() {
@@ -119,7 +119,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
             }
             // if an image is found but expired regarding default lifetime value,
             // a new one is created.
-            if (image.getStatus().equals(Status.CREATED) && isExpirated(url, image)) {
+            if (image.getStatus().equals(Status.CREATED) && isExpired(url, image)) {
                 return createCanonicalAndNoCanonicalImage(width, height, url, null, null);
             }
             return image;
@@ -130,7 +130,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
             LOGGER.debug("The requested image with width: " + width
                     + " height: " + height
                     + " url: " + url
-                    + " hasn't been found and has to created");
+                    + " hasn't been found and has to be created");
             return getImage(url, width, height);
         }
     }
@@ -332,7 +332,7 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
      * @param image
      * @return
      */
-    private boolean isExpirated(String url, Image image) {
+    private boolean isExpired(String url, Image image) {
         // if the requested url matches the pattern, that means that it never
         // expires. 
         if (notExpirableUrlPattern != null
@@ -341,6 +341,8 @@ public class ImageDataServiceImpl extends AbstractGenericDataService<Image, Long
         }
         // if the date of the last found snapshot is anterior than the current 
         // date minus the lifetime, we consider it as expired
+        boolean isExpirated = (Calendar.getInstance().getTimeInMillis() - image.getDateOfCreation().getTime()) > (lifetime * ONE_DAY);
+        LOGGER.debug("IS EXPIRATED ? " + isExpirated);
         return (Calendar.getInstance().getTimeInMillis() - image.getDateOfCreation().getTime()) > (lifetime * ONE_DAY);
     }
 

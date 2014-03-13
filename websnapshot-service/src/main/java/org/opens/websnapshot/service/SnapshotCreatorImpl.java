@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -42,23 +43,12 @@ public class SnapshotCreatorImpl implements SnapshotCreator {
     private static final int DEFAULT_WINDOW_HEIGHT = 768;
     private static final String FIREFOX_BROWSER_NAME = "firefox";
     private static final String PHANTOMJS_BROWSER_NAME = "phantomJs";
-    private String phantomJsBinaryPath = "/opt/phantomjs/bin/phantomjs";
+//    private String phantomJsBinaryPath = "/opt/phantomjs/bin/phantomjs";
+    private String phantomJsBinaryPath = "/home/alingua/Téléchargements/phantomjs-1.9.1/bin/phantomjs";
     private String firefoxBinaryPath = "/opt/firefox/firefox";
     private int windowWidth = DEFAULT_WINDOW_WIDTH;
     private int windowHeight = DEFAULT_WINDOW_HEIGHT;
     private String webDriver = PHANTOMJS_BROWSER_NAME;
-
-    public int getWindowWidth() {
-        return windowWidth;
-    }
-
-    public int getWindowHeight() {
-        return windowHeight;
-    }
-
-    public String getWebDriver() {
-        return webDriver;
-    }
 
     public void setWebDriver(String webDriver) {
         this.webDriver = webDriver;
@@ -74,6 +64,10 @@ public class SnapshotCreatorImpl implements SnapshotCreator {
 
     public void setPhantomJsBinaryPath(String phantomJsBinaryPath) {
         this.phantomJsBinaryPath = phantomJsBinaryPath;
+    }
+
+    public void setFirefoxBinaryPath(String firefoxBinaryPath) {
+        this.firefoxBinaryPath = firefoxBinaryPath;
     }
 
     @Override
@@ -119,11 +113,16 @@ public class SnapshotCreatorImpl implements SnapshotCreator {
      * @param url
      */
     private String loadPage(RemoteWebDriver driver, String url) {
-        driver.get(url);
-        driver.executeScript("if (getComputedStyle(document.body, null).backgroundColor === 'rgba(0, 0, 0, 0)'"
-                + "|| getComputedStyle(document.body, null).backgroundColor === 'transparent') {"
-                + "document.body.style.backgroundColor = 'white';"
-                + "}");
+        try {
+            driver.get(url);
+            driver.executeScript("if (getComputedStyle(document.body, null).backgroundColor === 'rgba(0, 0, 0, 0)'"
+                    + "|| getComputedStyle(document.body, null).backgroundColor === 'transparent') {"
+                    + "document.body.style.backgroundColor = 'white';"
+                    + "}");
+        } catch (Exception e) {
+            Logger.getLogger(this.getClass()).debug("Cannot load this url : " + url);
+            return SnapshotCreationResponse.ERROR;
+        }
         if (!url.equals(driver.getCurrentUrl())) {
             String urlAvailibility = UrlUtils.checkURLAvailable(driver.getCurrentUrl());
             if (!urlAvailibility.equals(UrlUtils.URL_AVAILABLE)) {
