@@ -57,10 +57,11 @@ public class ImageDAOImpl extends AbstractJPADAO<Image, Long>
     public Image findImageByWidthAndHeightAndUrl(int width, int height, String url) {
         Query query = entityManager.createQuery(
                 "SELECT i from " + getEntityClass().getName() + " as i "
-                + "LEFT JOIN FETCH i.url as u "
+                + "LEFT JOIN i.url as u "
                 + "WHERE i.width = :width "
                 + "AND i.height = :height "
                 + "AND u.url like :URL "
+                + "AND i.isCanonical = false "
                 + "ORDER BY i.dateOfCreation DESC");
         query.setParameter("width", width);
         query.setParameter("height", height);

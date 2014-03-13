@@ -85,15 +85,7 @@ public class ImageDAOImplTest extends AbstractDaoTestCase {
         System.out.println("Test findImageByWidthAndHeightAndUrl");
         ImageDAO instance = getBean();
 
-        Image image = instance.findImageByWidthAndHeightAndUrl(1024, 768, "www.google.fr");
-        assertEquals(Long.valueOf(1), image.getId());
-        image = instance.findImageByWidthAndHeightAndUrl(1024, 768, "www.epitech.eu");
-        assertEquals(Long.valueOf(12), image.getId());
-        image = instance.findImageByWidthAndHeightAndUrl(1024, 768, "www.facebook.com");
-        assertEquals(Long.valueOf(3), image.getId());
-        image = instance.findImageByWidthAndHeightAndUrl(1024, 768, "www.tanaguru.com");
-        assertEquals(Long.valueOf(4), image.getId());
-        image = instance.findImageByWidthAndHeightAndUrl(270, 170, "www.google.fr");
+        Image image = instance.findImageByWidthAndHeightAndUrl(270, 170, "www.google.fr");
         assertEquals(Long.valueOf(5), image.getId());
         image = instance.findImageByWidthAndHeightAndUrl(270, 170, "www.epitech.eu");
         assertEquals(Long.valueOf(6), image.getId());

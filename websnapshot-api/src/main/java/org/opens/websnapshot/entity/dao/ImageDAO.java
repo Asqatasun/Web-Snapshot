@@ -25,11 +25,35 @@ import org.opens.websnapshot.entity.Image;
 
 public interface ImageDAO extends GenericDAO<Image, Long> {
 
+    /**
+     * 
+     * @param width
+     * @param height
+     * @param url
+     * @return the not canonical image with the same parameter value
+     */
     Image findImageByWidthAndHeightAndUrl(int width, int height, String url);
 
+    /**
+     * 
+     * @param url
+     * @param date
+     * @param width
+     * @param height
+     * @return 
+     */
     Object findImageFromDateAndUrlAndWidthAndHeight(String url, Date date, int width, int height);
 
+    /**
+     * 
+     * @param url
+     * @return 
+     */
     Image findCanonicalImageByUrl(String url);
 
+    /**
+     * 
+     * @return 
+     */
     Long count();
 }
