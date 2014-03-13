@@ -43,8 +43,7 @@ public class SnapshotCreatorImpl implements SnapshotCreator {
     private static final int DEFAULT_WINDOW_HEIGHT = 768;
     private static final String FIREFOX_BROWSER_NAME = "firefox";
     private static final String PHANTOMJS_BROWSER_NAME = "phantomJs";
-//    private String phantomJsBinaryPath = "/opt/phantomjs/bin/phantomjs";
-    private String phantomJsBinaryPath = "/home/alingua/Téléchargements/phantomjs-1.9.1/bin/phantomjs";
+    private String phantomJsBinaryPath = "/opt/phantomjs/bin/phantomjs";
     private String firefoxBinaryPath = "/opt/firefox/firefox";
     private int windowWidth = DEFAULT_WINDOW_WIDTH;
     private int windowHeight = DEFAULT_WINDOW_HEIGHT;
