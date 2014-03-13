@@ -31,10 +31,10 @@ sudo service mysql restart
 
 ### Create the configuration file
     sudo touch /etc/websnapshot.conf
-You can use [this](https://github.com/Tanaguru/Web-snapshot/blob/master/websnapshot-resources/src/main/resources/conf/web-thumbnail.conf) configuration file and replace the variable.
+You can use [the web-snapshot configuration file](https://github.com/Tanaguru/Web-snapshot/blob/master/websnapshot-resources/src/main/resources/conf/web-thumbnail.conf) and replace the variable.
 
 ### Create the database
-You should use [this](https://github.com/Tanaguru/Web-snapshot/blob/master/websnapshot-resources/src/main/resources/sql/webthumbnail.sql) file and execute the request in your MySQL installation.
+You should use [the mysql database configuration file](https://github.com/Tanaguru/Web-snapshot/blob/master/websnapshot-resources/src/main/resources/sql/webthumbnail.sql) and execute the request in your MySQL installation.
 
 ### Create the log files
 
