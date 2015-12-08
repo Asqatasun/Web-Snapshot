@@ -22,3 +22,6 @@ target
 
 !commons-entity-3.0.0-beta8.jar
 !commons-entity-jpa-3.0.0-beta8.jar
+
+# saved files
+*~
