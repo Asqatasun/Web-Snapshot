@@ -5,6 +5,10 @@
 *.war
 *.ear
 
+# intellij
+*.iml
+.idea
+
 # db file #
 websnapshot.properties
 websnapshot.script

@@ -53,7 +53,7 @@
     <!--<context:annotation-config/>-->
 
     <aop:config>
-        <!--<aop:pointcut id="transactionalMethods" expression="execution(* org.opens.kbaccess.controller.*.*(..)) || bean(*Service)"/>-->
+        <!--<aop:pointcut id="transactionalMethods" expression="execution(* org.asqatasun.kbaccess.controller.*.*(..)) || bean(*Service)"/>-->
         <aop:pointcut id="transactionalMethods" expression="bean(*DAO)"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionalMethods"/>
     </aop:config>

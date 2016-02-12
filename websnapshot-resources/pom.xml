@@ -3,11 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.opens</groupId>
+        <groupId>org.asqatasun</groupId>
         <artifactId>websnapshot</artifactId>
         <version>1.0-RC1</version>
     </parent>
-    <groupId>org.opens</groupId>
+    <groupId>org.asqatasun</groupId>
     <artifactId>websnapshot-resources</artifactId>
     <version>1.0-RC1</version>
     <name>websnapshot-resources</name>

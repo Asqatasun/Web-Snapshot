@@ -5,7 +5,7 @@
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean id="imageDAO" class="org.opens.websnapshot.entity.dao.ImageDAOImpl"/>
-    <bean id="urlDAO" class="org.opens.websnapshot.entity.dao.UrlDAOImpl"/>
+    <bean id="imageDAO" class="org.asqatasun.websnapshot.entity.dao.ImageDAOImpl"/>
+    <bean id="urlDAO" class="org.asqatasun.websnapshot.entity.dao.UrlDAOImpl"/>
 
 </beans>

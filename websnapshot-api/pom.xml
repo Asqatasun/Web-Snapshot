@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.opens</groupId>
+        <groupId>org.asqatasun</groupId>
         <artifactId>websnapshot</artifactId>
         <version>1.0-RC1</version>
     </parent>
-    <groupId>org.opens</groupId>
+    <groupId>org.asqatasun</groupId>
     <artifactId>websnapshot-api</artifactId>
     <version>1.0-RC1</version>
     <packaging>jar</packaging>
@@ -25,8 +25,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.opens</groupId>
-            <artifactId>commons-entity</artifactId>
+            <groupId>org.asqatasun</groupId>
+            <artifactId>asqatasun-commons-entity</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-validator</groupId>

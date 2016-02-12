@@ -11,13 +11,13 @@
 
     <!-- DAO -->
     
-    <bean id="urlDAO" class="org.opens.websnapshot.entity.dao.UrlDAOImpl"/>
+    <bean id="urlDAO" class="org.asqatasun.websnapshot.entity.dao.UrlDAOImpl"/>
 
-    <bean id="imageDAO" class="org.opens.websnapshot.entity.dao.ImageDAOImpl"/>
+    <bean id="imageDAO" class="org.asqatasun.websnapshot.entity.dao.ImageDAOImpl"/>
      
     <!-- Data services -->
 
-    <bean id="imageDataService" class="org.opens.websnapshot.entity.service.ImageDataServiceImpl">
+    <bean id="imageDataService" class="org.asqatasun.websnapshot.entity.service.ImageDataServiceImpl">
         <property name="urlDataService">
             <ref bean="urlDataService"/>
         </property>
@@ -37,7 +37,7 @@
     </bean>
 
 
-    <bean id="urlDataService" class="org.opens.websnapshot.entity.service.UrlDataServiceImpl">
+    <bean id="urlDataService" class="org.asqatasun.websnapshot.entity.service.UrlDataServiceImpl">
         <property name="entityDao">
             <ref bean="urlDAO"/>
         </property>
@@ -48,13 +48,13 @@
     
     <!-- factory -->
      
-    <bean id="urlFactory" class="org.opens.websnapshot.entity.factory.UrlFactoryImpl"/>
+    <bean id="urlFactory" class="org.asqatasun.websnapshot.entity.factory.UrlFactoryImpl"/>
   
-    <bean id="imageFactory" class="org.opens.websnapshot.entity.factory.ImageFactoryImpl"/>
+    <bean id="imageFactory" class="org.asqatasun.websnapshot.entity.factory.ImageFactoryImpl"/>
     
     <!-- service -->
 
-    <bean id="snapshotCreator" class="org.opens.websnapshot.service.SnapshotCreatorImpl">
+    <bean id="snapshotCreator" class="org.asqatasun.websnapshot.service.SnapshotCreatorImpl">
         <property name="webDriver" value="phantomJS"/>
     </bean>
 
