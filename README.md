@@ -1,7 +1,19 @@
-web-snapshot
-============
+# Asqatasun Web-Snapshot
 
 Java API to create snaphots or thumbnails of webpage
 
 
-How to build, install and use ? Go to the [wiki](https://github.com/Tanaguru/Web-snapshot/wiki) !
+## Documentation
+How to build, install and use ? 
+Go to the [documentation](documentation/) !
+
+
+
+## License
+
+ [AGPL v3](LICENSE) 
+
+
+
+@@@TODO  Build Status - travis-ci.org
+
