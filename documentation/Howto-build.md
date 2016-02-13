@@ -16,7 +16,7 @@ Tested on Linux Ubuntu 12.04 LTS
 ### Clone the project from Github repository
     
     cd /home/<user>
-    git clone https://github.com/Tanaguru/Web-snapshot.git
+    git clone https://github.com/Asqatasun/Web-Snapshot.git
 
 ### Build the sources
 
