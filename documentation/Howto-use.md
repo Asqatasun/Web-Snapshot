@@ -1,4 +1,6 @@
-### Create snapshot and its thumbnail (With GET Request Method)
+# Howto use Asqatasun-Web-Snapshot 
+
+## Create snapshot and its thumbnail (With GET Request Method)
 Open your browser.
 
 Fill the address field with :
@@ -17,7 +19,7 @@ Fill the address field with :
 * (Optional Parameter) Replace [boolean] with `false` has no effect (if is not set too), just return the thumbnail. Replacing [boolean] with `true` returning a JSON with all informations about the thumbnail, and his status of creation.
 * (Required Parameter) Replace [url] with the url that you want to create thumbnail. This parameter must be the last parameter to deal with errors cases or fragments in url (usage of `#` characters for example).
 
-### Create snapshot and its thumbnail (With POST Request Method)
+## Create snapshot and its thumbnail (With POST Request Method)
 
 To explain this usage, we choose to use [cURL](http://fr.wikipedia.org/wiki/CURL) software to send POST request.
 

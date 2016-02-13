@@ -1,3 +1,6 @@
+
+# Howto build Asqatasun-Web-Snapshot 
+
 Tested on Linux Ubuntu 12.04 LTS
 
 ## Prerequesites
