@@ -3,13 +3,19 @@
 Tested on Linux Ubuntu 12.04 LTS
 
 ## Prerequesites
+
 * Tomcat (it's one of several solutions)
+* MySQL
+
+### Install Tomcat
+
 ```
     sudo aptitude install tomcat6 libspring-instrument-java
     sudo ln -s /usr/share/java/spring3-instrument-tomcat.jar /usr/share/tomcat6/lib/spring3-instrument-tomcat.jar
     sudo ln -s /usr/share/java/mysql-connector-java.jar /usr/share/tomcat6/lib/mysql-connector-java.jar
 ```
-* MySQL
+
+### Install MySQL
 
 Installation : 
 <code>sudo aptitude install mysql-server-5.5 libmysql-java</code>
