@@ -6,6 +6,9 @@ Tested on Linux Ubuntu 12.04 LTS
 
 * Tomcat (it's one of several solutions)
 * MySQL
+* PhantomJs 
+* Maven
+
 
 ### Install Tomcat
 
@@ -15,25 +18,29 @@ Tested on Linux Ubuntu 12.04 LTS
     sudo ln -s /usr/share/java/mysql-connector-java.jar /usr/share/tomcat6/lib/mysql-connector-java.jar
 ```
 
+
+### Install PhantomJs 1.9.7
+```
+    cd /opt
+    sudo wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
+    sudo tar -xvf phantomjs-1.9.7-linux-x86_64.tar.bz2
+    sudo rm phantomjs-1.9.7-linux-x86_64.tar.bz2
+    sudo ln -s /opt/phantomjs-1.9.7-linux-x86_64 /opt/phantomjs
+```
+
 ### Install MySQL
 
 Installation : 
-<code>sudo aptitude install mysql-server-5.5 libmysql-java</code>
+> `sudo aptitude install mysql-server-5.5 libmysql-java`
 
-Configuration :
+Configuration : edit the my.cnf mysql configuration file.
+> `sudo vi /etc/mysql/my.cnf`
 
-Edit the my.cnf mysql configuration file.
-```
-sudo vi /etc/mysql/my.cnf
-```
 Set the max_allowed_packet option to 16M (default is 1M)
-```
-max_allowed_packet      = 16M
-```
+> `max_allowed_packet      = 16M`
+
 Restart mysql service
-```
-sudo service mysql restart
-```
+> `sudo service mysql restart`
 
 ## Howto install
 
