@@ -1,6 +1,6 @@
 /*
  * Web-Snapshot
- * Copyright (C) 2008-2014  Open-S Company
+ * Copyright (C) 2008-2016  Asqatasun.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Contact us by mail: open-s AT open-s DOT com
+ * Contact us by mail: asqatasun AT asqatasun DOT org
  */
 package org.asqatasun.websnapshot.entity.dao;
 
