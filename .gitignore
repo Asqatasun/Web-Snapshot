@@ -18,10 +18,20 @@ websnapshot.tmp
 # firefox #
 *debuglog.txt
 
-target
-
 !commons-entity-3.0.0-beta8.jar
 !commons-entity-jpa-3.0.0-beta8.jar
 
+# Build
+target
+
+# Netbeans
+nbproject
+nb-configuration.xml
+nbactions.xml
+
 # saved files
 *~
+
+# Git - Merge temp file
+*.orig
+
