@@ -1,3 +1,6 @@
+[![License : AGPL v3](https://img.shields.io/badge/License-AGPL3-blue.svg)](LICENSE) 
+[![Build Status](https://travis-ci.org/Asqatasun/Web-Snapshot.svg)](https://travis-ci.org/Asqatasun/Web-Snapshot)
+
 # Asqatasun Web-Snapshot
 
 Java API to create snaphots or thumbnails of webpage
@@ -30,7 +33,4 @@ Everything is summarized in the [CONTRIBUTING](CONTRIBUTING.md) file.
 
  [AGPL v3](LICENSE) 
 
-
-
-@@@TODO  Build Status - travis-ci.org
 
