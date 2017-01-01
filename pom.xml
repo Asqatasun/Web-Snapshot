@@ -38,6 +38,9 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
     <dependencyManagement>
