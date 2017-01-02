@@ -45,7 +45,8 @@ Restart mysql service
 ## Howto install
 
 ### Create the configuration file
-    sudo touch /etc/websnapshot.conf
+    sudo mkdir -p /etc/websnapshot/
+    sudo touch /etc/websnapshot/websnapshot.conf 
 You can use [the web-snapshot configuration file](https://github.com/Asqatasun/Web-Snapshot/blob/master/websnapshot-resources/src/main/resources/conf/websnapshot.conf) and replace the variable.
 
 ### Create the database
