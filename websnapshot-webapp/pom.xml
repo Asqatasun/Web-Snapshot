@@ -111,7 +111,7 @@
                         <descriptor>src/main/resources/descriptor.xml</descriptor>
                     </descriptors>
                     <outputDirectory>target</outputDirectory>
-                    <finalName>websnapshot_${version}.i386</finalName>
+                    <finalName>websnapshot_${project.version}.i386</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
